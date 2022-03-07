@@ -6,12 +6,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/store';
+import LoginProvider from './context/LoginProvider';
 
 ReactDOM.render(
   <Provider store={ store }>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <LoginProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </LoginProvider>
   </Provider>,
   document.getElementById('root'),
 );
