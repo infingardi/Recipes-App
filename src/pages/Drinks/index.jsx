@@ -11,7 +11,7 @@ function Drinks() {
 
   return (
     <section>
-      <Header title="drinks" />
+      <Header title="Drinks" search />
       {data.slice(0, MAX_LENGTH).map((e, i) => (
         <Card
           key={ e.idDrink }
