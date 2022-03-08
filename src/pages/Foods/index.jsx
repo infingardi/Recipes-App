@@ -1,31 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Card from '../../components/Card';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-// import { getAllfoods } from '../../services';
+import { fetMeals } from '../../services';
+import { setFoodAndDrinks } from '../../redux/actions';
 
 function Foods() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
   const MAX_LENGTH = 12;
-  // const history = useHistory();
-  // const arrayPathname = history.location.pathname.split('/')[1];
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (data.length === 1 && data[0] !== null) {
-  //     history.push(`/${arrayPathname}/${data[0][arrayPathname === 'foods'
-  //       ? 'idMeal' : 'idDrink']}`);
-  //   }
-  // }, [data]);
+  const getMeals = useCallback(async () => {
+    const response = await fetMeals();
+    dispatch(setFoodAndDrinks(response));
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   getAllfoods().then((e) => {
-  //     console.log(e);
-  //   });
-  // }, []);
-
-  // console.log(data.slice(0, MAX_LENGTH));
+  useEffect(() => {
+    getMeals();
+  }, [getMeals]);
 
   return (
     <section>
