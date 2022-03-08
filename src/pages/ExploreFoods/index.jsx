@@ -1,35 +1,32 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+import RedirectButton from '../../components/RedirectButton';
 
 function ExploreFoods() {
-  const { push } = useHistory();
   return (
     <div>
       <Header title="Explore Foods" />
       <main>
-        <button
-          type="button"
-          data-testid="explore-by-ingredient"
-          onClick={ () => push('/explore/foods/ingredients') }
-        >
-          By Ingredient
-        </button>
-        <button
-          type="button"
-          data-testid="explore-by-nationality"
-          onClick={ () => push('/explore/foods/nationalities') }
-        >
-          By Nationality
-        </button>
-        <button
-          type="button"
-          data-testid="explore-surprise"
-        >
-          Surprise me!
-        </button>
+        <RedirectButton
+          dataTest="explore-by-ingredient"
+          titleBtn="By Ingredient"
+          path="/explore/foods/ingredients"
+        />
+
+        <RedirectButton
+          dataTest="explore-by-nationality"
+          titleBtn="By Nationality"
+          path="/explore/foods/nationalities"
+        />
+
+        <RedirectButton
+          dataTest="explore-surprise"
+          titleBtn="Surprise me!"
+          path="/explore/foods/nationalities"
+        />
+
       </main>
       <Footer />
     </div>
