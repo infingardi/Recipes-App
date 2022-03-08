@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import Proptypes from 'prop-types';
 
 import SearchBar from '../SearchBar';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import RedirectButtonImg from '../RedirectButtonImg';
 
 function Header({ title, search = false }) {
-  const { push } = useHistory();
   const [isSearching, setIsSearching] = useState(false);
 
   return (
     <header>
-      <button
-        type="button"
-        onClick={ () => push('/profile') }
-        data-testid="profile-top-btn"
-        src={ profileIcon }
-      >
-        <img src={ profileIcon } alt="search" />
-      </button>
+      <RedirectButtonImg
+        dataTest="profile-top-btn"
+        iconImg={ profileIcon }
+        path="/profile"
+        iconAlt="profile"
+      />
 
       <h1 data-testid="page-title">
         { title }
       </h1>
+
       { search && (
         <button
           type="button"
