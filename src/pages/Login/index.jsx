@@ -1,8 +1,12 @@
-import React, { useContext } from 'react';
-import loginContext from '../../context/loginContext';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { actionLogin } from '../../redux/actions';
 
 export default function Index() {
-  const { email, setEmail, password, setPassword } = useContext(loginContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+
   const MIN_LENGTH = 7;
   const REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{3}$/;
   const teste = () => {
@@ -18,10 +22,14 @@ export default function Index() {
     );
   };
 
+  function loginUser() {
+    dispatch(actionLogin(email));
+  }
+
   return (
     <div>
       <h1>Login</h1>
-      <form>
+      <form onSubmit={ (e) => e.preventDefault() }>
 
         <label htmlFor="emailInput">
           <input
@@ -51,6 +59,7 @@ export default function Index() {
           id="loggin-submit-btn"
           data-testid="login-submit-btn"
           disabled={ teste() }
+          onClick={ loginUser }
         >
           Enter
         </button>

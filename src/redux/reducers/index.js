@@ -18,7 +18,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_LOGIN_TYPE:
     return {
-      ...state,
+      ...state, user: { email: action.payload },
     };
   case SET_FOOD_DRINKS_TYPE:
     return {
