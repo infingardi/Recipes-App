@@ -30,12 +30,12 @@ function App() {
       <Route exact path="/explore/drinks" component={ ExploreDrinks } />
       <Route
         exact
-        path="/explore/foods/ingredient"
+        path="/explore/foods/ingredients"
         component={ ExploreFoodsByIngredient }
       />
       <Route
         exact
-        path="/explore/drinks/ingredient"
+        path="/explore/drinks/ingredients"
         component={ ExploreDrinksByIngredient }
       />
       <Route
