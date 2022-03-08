@@ -1,15 +1,13 @@
 import React from 'react';
 
-import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-function Profile() {
+function ExploreFoodsByNationality() {
   return (
     <div>
-      <Header title="Profile" />
       <Footer />
     </div>
   );
 }
 
-export default Profile;
+export default ExploreFoodsByNationality;
