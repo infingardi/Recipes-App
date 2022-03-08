@@ -9,8 +9,6 @@ function Footer() {
   return (
     <footer
       data-testid="footer"
-      // inline para passar no req 20
-      style={ { position: 'fixed', bottom: '0px' } }
     >
       <RedirectButtonImg
         dataTest="drinks-bottom-btn"
