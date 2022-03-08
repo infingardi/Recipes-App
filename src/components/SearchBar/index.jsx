@@ -1,12 +1,15 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { setFoodAndDrinks } from '../../redux/actions';
 
-import { getFood, getDrink } from '../../services';
+import { fetchFoodsOrDrinks } from '../../services';
 
 function SearchBar() {
   const history = useHistory();
   const option = useRef();
   const inputText = useRef();
+  const dispatch = useDispatch();
 
   const verifyFirstLetter = () => {
     const verify = option.current.includes('f=') && inputText.current.length > 1;
@@ -16,7 +19,7 @@ function SearchBar() {
 
   const handleSubmitButton = async (e) => {
     e.preventDefault();
-    const arrayPathname = history.location.pathname.split('/');
+    const arrayPathname = history.location.pathname.split('/')[1];
     const reqPath = `${option.current}${inputText.current}`;
 
     if (verifyFirstLetter()) {
@@ -24,14 +27,26 @@ function SearchBar() {
       return;
     }
 
-    let data;
-    if (arrayPathname[1] === 'foods') {
-      data = await getFood(reqPath);
-    } else if (arrayPathname[1] === 'drinks') {
-      data = await getDrink(reqPath);
-    }
+    // let data;
+    // if (arrayPathname === 'foods') {
+    //   data = await getFood(reqPath);
+    // } else if (arrayPathname === 'drinks') {
+    //   data = await getDrink(reqPath);
+    // }
 
-    console.log(data);
+    fetchFoodsOrDrinks[arrayPathname](reqPath).then((response) => {
+      const verifyResponseOne = Object.values(response).flat();
+      if (verifyResponseOne.length === 1) {
+        if (verifyResponseOne[0] !== null) {
+          history.push(`/${arrayPathname}/${verifyResponseOne[0][arrayPathname === 'foods'
+            ? 'idMeal' : 'idDrink']}`);
+        } else {
+          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        }
+      } else {
+        dispatch(setFoodAndDrinks(response));
+      }
+    });
   };
 
   return (
