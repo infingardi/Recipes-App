@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import Card from '../../components/Card';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 // import { getAllfoods } from '../../services';
 
 function Foods() {
@@ -36,6 +38,7 @@ function Foods() {
           titleCard={ e.strMeal }
         />
       ))}
+      <Footer />
     </section>
   );
 }
