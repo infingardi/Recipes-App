@@ -3,13 +3,13 @@ import React from 'react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
-function ExploreDrinksByIngredient() {
+function FavoriteRecipes() {
   return (
     <div>
-      <Header title="Explore Ingredients" />
+      <Header title="Favorite Recipes" />
       <Footer />
     </div>
   );
 }
 
-export default ExploreDrinksByIngredient;
+export default FavoriteRecipes;

@@ -14,6 +14,8 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreFoodsByIngredient from './pages/ExploreFoodsByIngredient';
 import ExploreDrinksByIngredient from './pages/ExploreDrinksByIngredient';
 import ExploreFoodsByNationality from './pages/ExploreFoodsByNationality';
+import DoneRecipes from './pages/DoneRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
         path="/explore/foods/nationalities"
         component={ ExploreFoodsByNationality }
       />
+      <Route exact path="/done-recipes" component={ DoneRecipes } />
+      <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
     </Switch>
   );
 }

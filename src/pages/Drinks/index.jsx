@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Header from '../../components/Header';
-import BtnCategory from '../../components/BtnCategory';
+// import BtnCategory from '../../components/BtnCategory';
 import Card from '../../components/Card';
 import Footer from '../../components/Footer';
 import { fetDrinks } from '../../services';
@@ -25,8 +25,7 @@ function Drinks() {
 
   return (
     <section>
-      <Header title="drinks" />
-      <BtnCategory />
+      <Header title="Drinks" search />
       {data.slice(0, MAX_LENGTH).map((e, i) => (
         <Card
           key={ e.idDrink }
