@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { actionLogin } from '../../redux/actions';
 
 export default function Index() {
+  const history = useHistory();
+  const TOKEN = 1;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -24,6 +27,10 @@ export default function Index() {
 
   function loginUser() {
     dispatch(actionLogin(email));
+    localStorage.setItem('mealsToken', TOKEN);
+    localStorage.setItem('cocktailsToken', TOKEN);
+    localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/foods');
   }
 
   return (
