@@ -3,19 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default function RedirectButtonImg({ dataTest, iconImg, path, iconAlt }) {
-  // const { push } = useHistory();
-  console.log(path);
   return (
-    // <Link to={ path }>
-    //   <img data-testid={ dataTest } src={ iconImg } alt={ iconAlt } />
-    // </Link>
-    <div>oi</div>
-    // <button
-    //   type="button"
-    //   onClick={ () => push(path) }
-    // >
-    //   <img data-testid={ dataTest } src={ iconImg } alt={ iconAlt } />
-    // </button>
+    <Link to={ path }>
+      <img data-testid={ dataTest } src={ iconImg } alt={ iconAlt } />
+    </Link>
   );
 }
 
