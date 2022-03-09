@@ -14,11 +14,10 @@ export function actionAddFavorite() {
   };
 }
 
-export function actionAddDone() {
-  return {
-    type: ADD_DONE_TYPE,
-  };
-}
+export const actionAddDone = (doneRecipe) => ({
+  type: ADD_DONE_TYPE,
+  payload: doneRecipe,
+});
 
 export const setFoodAndDrinks = (newResponse) => ({
   type: SET_FOOD_DRINKS_TYPE,
