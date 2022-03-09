@@ -38,14 +38,14 @@ export const fetDrinks = async () => {
   return data;
 };
 
-export const fetMealsCategorys = async () => {
+export const fetMealsCategories = async () => {
   const response = await fetch(`${BASE_MEALS_CATEGORY}`);
   const data = await response.json();
 
   return data;
 };
 
-export const fetDrinksCategorys = async () => {
+export const fetDrinksCategories = async () => {
   const response = await fetch(`${BASE_DRINKS_CATEGORY}`);
   const data = await response.json();
 
