@@ -5,12 +5,12 @@ import Card from '../../components/Card';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CategoryBtnMeals from '../../components/CategoryBtnMeals';
+
 import { fetMeals, fetMealsCategories } from '../../services';
 import { setFoodAndDrinks, setMealsCategory } from '../../redux/actions';
 
 function Foods() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
-  const selectedIngredient1 = useSelector(({ selectedIngredient }) => selectedIngredient);
   const btnCategories = useSelector(({ mealsCategoryResponse }) => mealsCategoryResponse);
   // console.log(btnCategories);
 
@@ -20,7 +20,7 @@ function Foods() {
   const dispatch = useDispatch();
 
   const getMeals = useCallback(async () => {
-    const response = await fetMeals(selectedIngredient1);
+    const response = await fetMeals();
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
@@ -30,7 +30,6 @@ function Foods() {
 
   const getCategoryMeals = useCallback(async () => {
     const response = await fetMealsCategories();
-    console.log('RESPONSEapiCategories');
     dispatch(setMealsCategory(response));
   }, [dispatch]);
 

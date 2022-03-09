@@ -2,7 +2,8 @@ export const ADD_LOGIN_TYPE = 'ADD_LOGIN';
 export const ADD_FAVORITE_TYPE = 'ADD_FAVORITE';
 export const ADD_DONE_TYPE = 'ADD_DONE';
 export const SET_FOOD_DRINKS_TYPE = 'SET_FOOD_DRINKS';
-export const SET_SELECTED_INGREDIENT_TYPE = 'SET_SELECTED_INGREDIENT';
+export const SET_SELECTED_MEAL_INGREDIENT_TYPE = 'SET_SELECTED_MEAL_INGREDIENT';
+export const SET_SELECTED_DRINK_INGREDIENT_TYPE = 'SET_SELECTED_DRINK_INGREDIENT';
 export const SET_MEALS_CATEGORIES = 'SET_MEALS_CATEGORIES';
 export const SET_DRINKS_CATEGORIES = 'SET_DRINKS_CAGEGORIES';
 
@@ -28,10 +29,15 @@ export const setFoodAndDrinks = (newResponse) => ({
   payload: newResponse,
 });
 
-export const setSelectedIngredient = (newResponse) => ({
-  type: SET_SELECTED_INGREDIENT_TYPE,
+export const setSelectedMealIngredient = (newResponse) => ({
+  type: SET_SELECTED_MEAL_INGREDIENT_TYPE,
   payload: newResponse,
- )}
+});
+
+export const setSelectedDrinkIngredient = (newResponse) => ({
+  type: SET_SELECTED_DRINK_INGREDIENT_TYPE,
+  payload: newResponse,
+});
 
 export const setMealsCategory = (mealsCategoryResponse) => ({
   type: SET_MEALS_CATEGORIES,
