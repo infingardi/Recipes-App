@@ -2,6 +2,8 @@ import {
   ADD_LOGIN_TYPE,
   SET_FOOD_DRINKS_TYPE,
   SET_SELECTED_INGREDIENT_TYPE,
+  SET_MEALS_CATEGORIES,
+  SET_DRINKS_CATEGORIES,
   // ADD_FAVORITE_TYPE,
   // ADD_DONE_TYPE
 } from '../actions';
@@ -15,6 +17,8 @@ const INITIAL_STATE = {
   favoriteRecipes: [],
   inProgressRecipes: {},
   selectedIngredient: '',
+  mealsCategoryResponse: [],
+  drinksCategoryResponse: [],
 };
 
 const rootReducer = (state = INITIAL_STATE, action) => {
@@ -31,6 +35,14 @@ const rootReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       selectedIngredient: action.payload,
+    }
+  case SET_MEALS_CATEGORIES:
+    return {
+      ...state, mealsCategoryResponse: Object.values(action.payload).flat(),
+    };
+  case SET_DRINKS_CATEGORIES:
+    return {
+      ...state, drinksCategoryResponse: Object.values(action.payload).flat(),
     };
   // case ADD_FAVORITE_TYPE:
   //   return {
