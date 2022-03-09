@@ -10,9 +10,9 @@ import CategoryBtnDrinks from '../../components/CategoryBtnDrinks';
 
 function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
+  const selectedIngredient1 = useSelector(({ selectedIngredient }) => selectedIngredient);
   const btnCategories = useSelector(
     ({ drinksCategoryResponse }) => drinksCategoryResponse,
-  );
 
   const MAX_LENGTH = 12;
   const MAX_LENGTH_CATEGORIES = 5;
@@ -20,7 +20,7 @@ function Drinks() {
   const dispatch = useDispatch();
 
   const getDrinks = useCallback(async () => {
-    const response = await fetDrinks();
+    const response = await fetDrinks(selectedIngredient1);
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
@@ -53,6 +53,7 @@ function Drinks() {
         <Card
           key={ e.idDrink }
           index={ i }
+          type="recipe"
           src={ e.strDrinkThumb }
           titleCard={ e.strDrink }
         />

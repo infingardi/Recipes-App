@@ -1,5 +1,7 @@
 import {
-  ADD_LOGIN_TYPE, SET_FOOD_DRINKS_TYPE,
+  ADD_LOGIN_TYPE,
+  SET_FOOD_DRINKS_TYPE,
+  SET_SELECTED_INGREDIENT_TYPE,
   SET_MEALS_CATEGORIES,
   SET_DRINKS_CATEGORIES,
   // ADD_FAVORITE_TYPE,
@@ -14,9 +16,9 @@ const INITIAL_STATE = {
   doneRecipes: [],
   favoriteRecipes: [],
   inProgressRecipes: {},
+  selectedIngredient: '',
   mealsCategoryResponse: [],
   drinksCategoryResponse: [],
-
 };
 
 const rootReducer = (state = INITIAL_STATE, action) => {
@@ -29,6 +31,11 @@ const rootReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state, responseFoodAndDrinks: Object.values(action.payload).flat(),
     };
+  case SET_SELECTED_INGREDIENT_TYPE:
+    return {
+      ...state,
+      selectedIngredient: action.payload,
+    }
   case SET_MEALS_CATEGORIES:
     return {
       ...state, mealsCategoryResponse: Object.values(action.payload).flat(),
