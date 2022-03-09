@@ -1,4 +1,5 @@
 import {
+  ADD_DONE_TYPE,
   ADD_LOGIN_TYPE,
   SET_FOOD_DRINKS_TYPE,
   SET_SELECTED_MEAL_INGREDIENT_TYPE,
@@ -59,6 +60,10 @@ const rootReducer = (state = INITIAL_STATE, action) => {
   //   return {
   //     ...state,
   //   };
+  case ADD_DONE_TYPE:
+    return {
+      ...state, doneRecipes: [...state.doneRecipes, action.payload],
+    };
   default:
     return state;
   }

@@ -18,8 +18,8 @@ export const getFood = async (endpoint) => {
   return data;
 };
 
-export const getDrink = async () => {
-  const response = await fetch(`${BASE_DRINK_URL}`);
+export const getDrink = async (endpoint) => {
+  const response = await fetch(`${BASE_DRINK_URL}${endpoint}`);
   const data = await response.json();
 
   return data;

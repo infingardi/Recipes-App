@@ -2,3 +2,17 @@ footer {
   bottom: 0;
   position: fixed;
 }
+
+.carrocel-container {
+  overflow: auto;
+}
+
+.carrocel-container > div {
+  display: flex;
+  overflow: auto;
+  width: 1800px;
+}
+
+.carrocel-container > div > div {
+  width: 200px;
+}
