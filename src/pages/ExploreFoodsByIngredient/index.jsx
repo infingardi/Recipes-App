@@ -25,7 +25,7 @@ function ExploreFoodsByIngredient() {
           key={ e.idIngredient }
           index={ i }
           type="ingredient"
-          src={ `https://www.themealdb.com/images/ingredients/${e.strIngredient.replace(' ', '%20')}.png` }
+          src={ `https://www.themealdb.com/images/ingredients/${e.strIngredient}-Small.png` }
           titleCard={ e.strIngredient }
         />
       ))}

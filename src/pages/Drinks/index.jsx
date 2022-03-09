@@ -10,12 +10,13 @@ import { setFoodAndDrinks } from '../../redux/actions';
 
 function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
+  const selectedIngredient1 = useSelector(({ selectedIngredient }) => selectedIngredient);
   const MAX_LENGTH = 12;
 
   const dispatch = useDispatch();
 
   const getDrinks = useCallback(async () => {
-    const response = await fetDrinks();
+    const response = await fetDrinks(selectedIngredient1);
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 

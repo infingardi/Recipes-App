@@ -17,6 +17,7 @@ function ExploreDrinksByIngredient() {
   useEffect(() => {
     getIngredientDrinks();
   }, [getIngredientDrinks]);
+
   return (
     <div>
       <Header title="Explore Ingredients" />
@@ -25,8 +26,9 @@ function ExploreDrinksByIngredient() {
           key={ e.strIngredient1 }
           index={ i }
           type="ingredient"
-          src={ `https://www.thecocktaildb.com/images/ingredients/${e.strIngredient1.replace(' ', '%20')}-Medium.png` }
+          src={ `https://www.thecocktaildb.com/images/ingredients/${e.strIngredient1}-Small.png` }
           titleCard={ e.strIngredient1 }
+          onClick={ () => console.log('oi') }
         />
       ))}
       <Footer />

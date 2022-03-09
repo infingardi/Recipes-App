@@ -2,6 +2,7 @@ export const ADD_LOGIN_TYPE = 'ADD_LOGIN';
 export const ADD_FAVORITE_TYPE = 'ADD_FAVORITE';
 export const ADD_DONE_TYPE = 'ADD_DONE';
 export const SET_FOOD_DRINKS_TYPE = 'SET_FOOD_DRINKS';
+export const SET_SELECTED_INGREDIENT_TYPE = 'SET_SELECTED_INGREDIENT';
 
 export const actionLogin = (newEmail) => ({
   type: ADD_LOGIN_TYPE,
@@ -22,5 +23,10 @@ export function actionAddDone() {
 
 export const setFoodAndDrinks = (newResponse) => ({
   type: SET_FOOD_DRINKS_TYPE,
+  payload: newResponse,
+});
+
+export const setSelectedIngredient = (newResponse) => ({
+  type: SET_SELECTED_INGREDIENT_TYPE,
   payload: newResponse,
 });

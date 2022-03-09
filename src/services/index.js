@@ -28,15 +28,15 @@ export const fetchFoodsOrDrinks = {
   drinks: getDrink,
 };
 
-export const fetMeals = async () => {
-  const response = await fetch(`${BASE_MEALS}`);
+export const fetMeals = async (endpoint) => {
+  const response = await fetch(`${BASE_MEALS}${endpoint}`);
   const data = await response.json();
 
   return data;
 };
 
-export const fetDrinks = async () => {
-  const response = await fetch(`${BASE_DRINKS}`);
+export const fetDrinks = async (endpoint) => {
+  const response = await fetch(`${BASE_DRINKS}${endpoint}`);
   const data = await response.json();
 
   return data;
