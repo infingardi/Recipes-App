@@ -21,14 +21,14 @@ export default function DrinkDetails() {
   || doneLocalStorage.some((e) => e.id === id);
   const isProgress = progressStorage.cocktails[id];
 
-  const setFood = useCallback(async () => {
+  const setDrink = useCallback(async () => {
     dispatch(setFoodAndDrinks(await getDrink(`${ID_ENPOINT}${id}`)));
     setRecommended(await getFood('search.php?s='));
   }, [dispatch, id]);
 
   useEffect(() => {
-    setFood();
-  }, [setFood]);
+    setDrink();
+  }, [setDrink]);
 
   function startRecipe() {
     const dataForTest = { ...data, id };
