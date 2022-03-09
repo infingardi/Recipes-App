@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import RedirectButton from '../../components/RedirectButton';
+import { fetSurpriseMeDrinks } from '../../services';
 
 function ExploreDrinks() {
+  const [id, setId] = useState('0');
+  const getRandomDrink = useCallback(async () => {
+    const response = await fetSurpriseMeDrinks();
+    setId(response.drinks[0].idDrink);
+  }, []);
+
+  useEffect(() => {
+    getRandomDrink();
+  }, [getRandomDrink]);
   return (
     <div>
       <Header title="Explore Drinks" />
@@ -18,7 +28,7 @@ function ExploreDrinks() {
         <RedirectButton
           dataTest="explore-surprise"
           titleBtn="Surprise me!"
-          path="/explore/drinks/ingredients"
+          path={ `/drinks/${id}` }
         />
 
       </main>
