@@ -30,6 +30,7 @@ function Drinks() {
         <Card
           key={ e.idDrink }
           index={ i }
+          type="recipe"
           src={ e.strDrinkThumb }
           titleCard={ e.strDrink }
         />

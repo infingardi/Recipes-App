@@ -6,6 +6,8 @@ const BASE_MEALS_CATEGORY = 'https://www.themealdb.com/api/json/v1/1/list.php?c=
 const BASE_DRINKS_CATEGORY = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 const SURPRISE_ME_MEAL = 'https://www.themealdb.com/api/json/v1/1/random.php';
 const SURPRISE_ME_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+const LIST_ALL_INGREDIENTS_MEAL = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+const LIST_ALL_INGREDIENTS_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
 
 export const getFood = async (endpoint) => {
   const response = await fetch(`${BASE_FOOD_URL}${endpoint}`);
@@ -63,6 +65,20 @@ export const fetSurpriseMeMeals = async () => {
 
 export const fetSurpriseMeDrinks = async () => {
   const response = await fetch(`${SURPRISE_ME_DRINKS}`);
+  const data = await response.json();
+
+  return data;
+};
+
+export const fetIngredientsMeals = async () => {
+  const response = await fetch(`${LIST_ALL_INGREDIENTS_MEAL}`);
+  const data = await response.json();
+
+  return data;
+};
+
+export const fetIngredientsDrinks = async () => {
+  const response = await fetch(`${LIST_ALL_INGREDIENTS_DRINKS}`);
   const data = await response.json();
 
   return data;

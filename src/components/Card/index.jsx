@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Card({ src, titleCard, index }) {
+export default function Card({ src, titleCard, index, type }) {
   return (
-    <div data-testid={ `${index}-recipe-card` }>
+    <div data-testid={ `${index}-${type}-card` }>
       <img data-testid={ `${index}-card-img` } src={ src } alt="" />
       <h3 data-testid={ `${index}-card-name` }>{titleCard}</h3>
     </div>
