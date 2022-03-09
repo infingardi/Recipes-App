@@ -10,17 +10,16 @@ import CategoryBtnDrinks from '../../components/CategoryBtnDrinks';
 
 function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
-  const selectedIngredient1 = useSelector(({ selectedIngredient }) => selectedIngredient);
   const btnCategories = useSelector(
     ({ drinksCategoryResponse }) => drinksCategoryResponse,
-
+  );
   const MAX_LENGTH = 12;
   const MAX_LENGTH_CATEGORIES = 5;
 
   const dispatch = useDispatch();
 
   const getDrinks = useCallback(async () => {
-    const response = await fetDrinks(selectedIngredient1);
+    const response = await fetDrinks();
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
@@ -30,7 +29,8 @@ function Drinks() {
 
   const getCategoryDrinks = useCallback(async () => {
     const response = await fetDrinksCategories();
-    console.log('RESPONSEapiCategories');
+    console.log(response);
+    // console.log('RESPONSEapiCategories');
     dispatch(setDrinksCategory(response));
   }, [dispatch]);
 
