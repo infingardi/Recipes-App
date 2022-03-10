@@ -2,7 +2,9 @@ export const ADD_LOGIN_TYPE = 'ADD_LOGIN';
 export const ADD_FAVORITE_TYPE = 'ADD_FAVORITE';
 export const ADD_DONE_TYPE = 'ADD_DONE';
 export const SET_FOOD_DRINKS_TYPE = 'SET_FOOD_DRINKS';
-export const SET_SELECTED_INGREDIENT_TYPE = 'SET_SELECTED_INGREDIENT';
+export const SET_MEALS_CATEGORIES = 'SET_MEALS_CATEGORIES';
+export const SET_DRINKS_CATEGORIES = 'SET_DRINKS_CAGEGORIES';
+export const VERIFY_EXPLORE_CLICK = 'VERIFY_EXPLORE_CLICK';
 
 export const actionLogin = (newEmail) => ({
   type: ADD_LOGIN_TYPE,
@@ -15,18 +17,29 @@ export function actionAddFavorite() {
   };
 }
 
-export function actionAddDone() {
-  return {
-    type: ADD_DONE_TYPE,
-  };
-}
+export const actionAddDone = (doneRecipe) => ({
+  type: ADD_DONE_TYPE,
+  payload: doneRecipe,
+});
 
 export const setFoodAndDrinks = (newResponse) => ({
   type: SET_FOOD_DRINKS_TYPE,
   payload: newResponse,
 });
 
-export const setSelectedIngredient = (newResponse) => ({
-  type: SET_SELECTED_INGREDIENT_TYPE,
-  payload: newResponse,
+export const setMealsCategory = (mealsCategoryResponse) => ({
+  type: SET_MEALS_CATEGORIES,
+  payload: mealsCategoryResponse,
 });
+
+export const setDrinksCategory = (drinksCategoryResponse) => ({
+  type: SET_DRINKS_CATEGORIES,
+  payload: drinksCategoryResponse,
+});
+
+export function verifyExploreClick(isClickedInExplore) {
+  return {
+    type: VERIFY_EXPLORE_CLICK,
+    payload: isClickedInExplore,
+  };
+}

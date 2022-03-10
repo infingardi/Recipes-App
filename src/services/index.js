@@ -1,6 +1,8 @@
 const BASE_FOOD_URL = 'https://www.themealdb.com/api/json/v1/1/';
 const BASE_DRINK_URL = 'https://www.thecocktaildb.com/api/json/v1/1/';
 const BASE_MEALS = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+const BASE_MEALS_BY_CATEGORY = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+const BASE_DRINKS_BY_CATEGORY = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
 const BASE_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 const BASE_MEALS_CATEGORY = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 const BASE_DRINKS_CATEGORY = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
@@ -28,28 +30,42 @@ export const fetchFoodsOrDrinks = {
   drinks: getDrink,
 };
 
-export const fetMeals = async (endpoint) => {
-  const response = await fetch(`${BASE_MEALS}${endpoint}`);
+export const fetMeals = async () => {
+  const response = await fetch(`${BASE_MEALS}`);
   const data = await response.json();
 
   return data;
 };
 
-export const fetDrinks = async (endpoint) => {
-  const response = await fetch(`${BASE_DRINKS}${endpoint}`);
+export const fetAllMealsByCategory = async (endpoint) => {
+  const response = await fetch(`${BASE_MEALS_BY_CATEGORY}${endpoint}`);
   const data = await response.json();
 
   return data;
 };
 
-export const fetMealsCategorys = async () => {
+export const fetAllDrinksByCategory = async (endpoint) => {
+  const response = await fetch(`${BASE_DRINKS_BY_CATEGORY}${endpoint}`);
+  const data = await response.json();
+
+  return data;
+};
+
+export const fetDrinks = async () => {
+  const response = await fetch(`${BASE_DRINKS}`);
+  const data = await response.json();
+
+  return data;
+};
+
+export const fetMealsCategories = async () => {
   const response = await fetch(`${BASE_MEALS_CATEGORY}`);
   const data = await response.json();
 
   return data;
 };
 
-export const fetDrinksCategorys = async () => {
+export const fetDrinksCategories = async () => {
   const response = await fetch(`${BASE_DRINKS_CATEGORY}`);
   const data = await response.json();
 

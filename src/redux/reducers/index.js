@@ -1,9 +1,10 @@
 import {
+  ADD_DONE_TYPE,
   ADD_LOGIN_TYPE,
   SET_FOOD_DRINKS_TYPE,
-  SET_SELECTED_INGREDIENT_TYPE,
-  // ADD_FAVORITE_TYPE,
-  // ADD_DONE_TYPE
+  SET_MEALS_CATEGORIES,
+  SET_DRINKS_CATEGORIES,
+  VERIFY_EXPLORE_CLICK,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -14,7 +15,9 @@ const INITIAL_STATE = {
   doneRecipes: [],
   favoriteRecipes: [],
   inProgressRecipes: {},
-  selectedIngredient: '',
+  mealsCategoryResponse: [],
+  drinksCategoryResponse: [],
+  isClickedInExplore: false,
 };
 
 const rootReducer = (state = INITIAL_STATE, action) => {
@@ -27,19 +30,20 @@ const rootReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state, responseFoodAndDrinks: Object.values(action.payload).flat(),
     };
-  case SET_SELECTED_INGREDIENT_TYPE:
+  case SET_MEALS_CATEGORIES:
     return {
-      ...state,
-      selectedIngredient: action.payload,
+      ...state, mealsCategoryResponse: Object.values(action.payload).flat(),
     };
-  // case ADD_FAVORITE_TYPE:
-  //   return {
-  //     ...state,
-  //   };
-  // case ADD_DONE_TYPE:
-  //   return {
-  //     ...state,
-  //   };
+  case SET_DRINKS_CATEGORIES:
+    return {
+      ...state, drinksCategoryResponse: Object.values(action.payload).flat(),
+    };
+  case VERIFY_EXPLORE_CLICK:
+    return { ...state, isClickedInExplore: action.payload };
+  case ADD_DONE_TYPE:
+    return {
+      ...state, doneRecipes: [...state.doneRecipes, action.payload],
+    };
   default:
     return state;
   }
