@@ -8,6 +8,7 @@ export default function Card({ src, titleCard, index, type, onClick }) {
       data-testid={ `${index}-${type}-card` }
       onClick={ () => onClick(titleCard) }
       key={ index }
+      className="card-class"
     >
       <img data-testid={ `${index}-card-img` } src={ src } alt={ titleCard } />
       <h3 data-testid={ `${index}-card-name` }>{titleCard}</h3>
