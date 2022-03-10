@@ -14,10 +14,9 @@ export default function CategoryBtnMeals({ index, categoryName }) {
   };
 
   return (
-    <section className="btn-category">
+    <section className="btn-category" key={ index }>
       <button
         type="button"
-        key={ index }
         data-testid={ `${categoryName}-category-filter` }
         onClick={ handleClick }
       >
