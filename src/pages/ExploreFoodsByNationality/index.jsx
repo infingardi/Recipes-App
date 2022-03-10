@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Footer from '../../components/Footer';
@@ -19,7 +19,7 @@ function ExploreFoodsByNationality() {
     setAllNationalities(meals);
   };
 
-  const getAllMealsByNationality = async () => {
+  const getAllMealsByNationality = useCallback(async () => {
     if (selectedNationality === 'All') {
       const { meals } = await getFood('search.php?s=');
       setAllMealsByNationality(meals);
@@ -28,7 +28,7 @@ function ExploreFoodsByNationality() {
     const { meals } = await getFood(`filter.php?a=${selectedNationality}`);
 
     setAllMealsByNationality(meals);
-  };
+  }, [selectedNationality]);
 
   const renderAllNationalities = () => {
     const allOptions = [{ strArea: 'All' }, ...allNationalities];
