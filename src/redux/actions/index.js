@@ -55,4 +55,3 @@ export function verifyExploreClick(isClickedInExplore) {
     payload: isClickedInExplore,
   };
 }
-
