@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Header from '../../components/Header';
@@ -15,6 +15,7 @@ import {
 function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
   const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
+  const verifyRef = useRef(verify);
   const btnCategories = useSelector(
     ({ drinksCategoryResponse }) => drinksCategoryResponse,
   );
@@ -28,13 +29,15 @@ function Drinks() {
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
-  useEffect(() => { // verifica se ele foi redirecionado pela pagina de explore
-    if (!verify) { // caso tenha sido ele não ira fazer uma nova requisição a API
+  const verifyRedirect = () => { // verifica se ele foi redirecionado pela pagina de explore
+    if (!verifyRef) { // caso tenha sido ele não ira fazer uma nova requisição a API
       getDrinks();
     } else {
       dispatch(verifyExploreClick(false));
     }
-  }, [verify, dispatch, getDrinks]);
+  };
+
+  useEffect(verifyRedirect, [dispatch, getDrinks]);
 
   const getCategoryDrinks = useCallback(async () => {
     const response = await fetDrinksCategories();
