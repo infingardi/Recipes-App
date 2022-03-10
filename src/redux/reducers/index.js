@@ -1,4 +1,5 @@
 import {
+  ADD_DONE_TYPE,
   ADD_LOGIN_TYPE,
   SET_FOOD_DRINKS_TYPE,
   SET_MEALS_CATEGORIES,
@@ -39,6 +40,10 @@ const rootReducer = (state = INITIAL_STATE, action) => {
     };
   case VERIFY_EXPLORE_CLICK:
     return { ...state, isClickedInExplore: action.payload };
+  case ADD_DONE_TYPE:
+    return {
+      ...state, doneRecipes: [...state.doneRecipes, action.payload],
+    };
   default:
     return state;
   }
