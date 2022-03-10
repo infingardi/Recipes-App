@@ -2,13 +2,12 @@ import {
   ADD_DONE_TYPE,
   ADD_LOGIN_TYPE,
   SET_FOOD_DRINKS_TYPE,
-  SET_SELECTED_MEAL_INGREDIENT_TYPE,
-  SET_SELECTED_DRINK_INGREDIENT_TYPE,
   SET_MEALS_CATEGORIES,
   SET_DRINKS_CATEGORIES,
   ADD_FAVORITE_TYPE,
   REMOVE_FAVORITE_TYPE,
   ADD_PROGRESS_RECIPES_TYPE,
+  VERIFY_EXPLORE_CLICK,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -24,6 +23,7 @@ const INITIAL_STATE = {
   selectedDrinkIngredient: '',
   mealsCategoryResponse: [],
   drinksCategoryResponse: [],
+  isClickedInExplore: false,
 };
 
 const rootReducer = (state = INITIAL_STATE, action) => {
@@ -35,16 +35,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
   case SET_FOOD_DRINKS_TYPE:
     return {
       ...state, responseFoodAndDrinks: Object.values(action.payload).flat(),
-    };
-  case SET_SELECTED_MEAL_INGREDIENT_TYPE:
-    return {
-      ...state,
-      selectedMealIngredient: action.payload,
-    };
-  case SET_SELECTED_DRINK_INGREDIENT_TYPE:
-    return {
-      ...state,
-      selectedDrinkIngredient: action.payload,
     };
   case SET_MEALS_CATEGORIES:
     return {
@@ -63,6 +53,8 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       ...state,
       favoriteRecipes: state.favoriteRecipes.filter((e) => e.id !== action.payload),
     };
+  case VERIFY_EXPLORE_CLICK:
+    return { ...state, isClickedInExplore: action.payload };
   case ADD_DONE_TYPE:
     return {
       ...state,
