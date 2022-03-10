@@ -4,6 +4,9 @@ import {
   SET_FOOD_DRINKS_TYPE,
   SET_MEALS_CATEGORIES,
   SET_DRINKS_CATEGORIES,
+  ADD_FAVORITE_TYPE,
+  REMOVE_FAVORITE_TYPE,
+  ADD_PROGRESS_RECIPES_TYPE,
   VERIFY_EXPLORE_CLICK,
 } from '../actions';
 
@@ -12,9 +15,12 @@ const INITIAL_STATE = {
   mealsToken: 1,
   responseFoodAndDrinks: [],
   cocktailsToken: 1,
-  doneRecipes: [],
-  favoriteRecipes: [],
-  inProgressRecipes: {},
+  doneRecipes: JSON.parse(localStorage.getItem('doneRecipes')) || [],
+  favoriteRecipes: JSON.parse(localStorage.getItem('favoriteRecipes')) || [],
+  inProgressRecipes: JSON.parse(localStorage.getItem('inProgressRecipes'))
+  || { meals: [], cocktails: [] },
+  selectedMealIngredient: '',
+  selectedDrinkIngredient: '',
   mealsCategoryResponse: [],
   drinksCategoryResponse: [],
   isClickedInExplore: false,
@@ -38,11 +44,26 @@ const rootReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state, drinksCategoryResponse: Object.values(action.payload).flat(),
     };
+  case ADD_FAVORITE_TYPE:
+    return {
+      ...state, favoriteRecipes: [...state.favoriteRecipes, action.payload],
+    };
+  case REMOVE_FAVORITE_TYPE:
+    return {
+      ...state,
+      favoriteRecipes: state.favoriteRecipes.filter((e) => e.id !== action.payload),
+    };
   case VERIFY_EXPLORE_CLICK:
     return { ...state, isClickedInExplore: action.payload };
   case ADD_DONE_TYPE:
     return {
-      ...state, doneRecipes: [...state.doneRecipes, action.payload],
+      ...state,
+      doneRecipes: [...state.doneRecipes, { ...action.payload, id: action.payload.id }],
+    };
+  case ADD_PROGRESS_RECIPES_TYPE:
+    return {
+      ...state,
+      inProgressRecipes: { ...state.inProgressRecipes, [action.destiny]: action.payload },
     };
   default:
     return state;

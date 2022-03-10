@@ -34,7 +34,7 @@ function Drinks() {
     } else {
       dispatch(verifyExploreClick(false));
     }
-  }, [getDrinks]);
+  }, [verify, dispatch, getDrinks]);
 
   const getCategoryDrinks = useCallback(async () => {
     const response = await fetDrinksCategories();
