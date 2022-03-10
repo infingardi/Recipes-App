@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Card({ src, titleCard, index, type }) {
+export default function Card({ src, titleCard, index, type, onClick }) {
   return (
-    <button type="button" data-testid={ `${index}-${type}-card` }>
-      <img data-testid={ `${index}-card-img` } src={ src } alt="" />
+    <button
+      type="button"
+      data-testid={ `${index}-${type}-card` }
+      onClick={ () => onClick(titleCard) }
+      key={ index }
+    >
+      <img data-testid={ `${index}-card-img` } src={ src } alt={ titleCard } />
       <h3 data-testid={ `${index}-card-name` }>{titleCard}</h3>
     </button>
   );
