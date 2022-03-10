@@ -34,7 +34,7 @@ function Foods() {
     } else {
       dispatch(verifyExploreClick(false));
     }
-  }, [getMeals]);
+  }, [dispatch, verify, getMeals]);
 
   const getCategoryMeals = useCallback(async () => {
     const response = await fetMealsCategories();

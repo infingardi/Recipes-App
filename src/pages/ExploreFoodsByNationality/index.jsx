@@ -71,7 +71,7 @@ function ExploreFoodsByNationality() {
 
   useEffect(() => {
     getAllMealsByNationality();
-  }, [selectedNationality]);
+  }, [getAllMealsByNationality, selectedNationality]);
 
   return (
     <div>
