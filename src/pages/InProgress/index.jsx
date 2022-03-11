@@ -9,16 +9,16 @@ import { actionAddFavorite, removeFavorites, setFoodAndDrinks,
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import InputCheck from '../../components/InputCheck';
-import testando from '../../helper';
+import handleData from '../../helper';
 
 export default function InProgress() {
   const { id } = useParams();
   const history = useHistory();
   const { pathname } = useLocation();
-  const test = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
+  const mealsOrDrinks = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
   const { responseFoodAndDrinks, favoriteRecipes } = useSelector((state) => state);
-  const { get, name, strCategory, objFavorites, rota,
-    strInstructions, strThumb, strTitle } = testando(responseFoodAndDrinks)[test];
+  const { get, name, strCategory, objFavorites, rota, strThumb,
+    strInstructions, strTitle } = handleData(responseFoodAndDrinks)[mealsOrDrinks];
   const [share, setShare] = useState('share');
   const { newProgress, storage } = useUpdateInProgress(name);
   const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
