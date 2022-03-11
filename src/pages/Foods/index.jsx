@@ -12,6 +12,7 @@ import {
   setMealsCategory,
   verifyExploreClick,
 } from '../../redux/actions';
+import CategoryAllMeals from '../../components/CategoryAllMeals';
 
 function Foods() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
@@ -48,6 +49,7 @@ function Foods() {
   return (
     <section>
       <Header title="Foods" search />
+      <CategoryAllMeals />
       {
         btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnMeals
@@ -64,6 +66,8 @@ function Foods() {
           type="recipe"
           src={ e.strMealThumb }
           titleCard={ e.strMeal }
+          foods="foods"
+          id={ e.idMeal }
         />
       ))}
       <Footer />

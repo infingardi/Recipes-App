@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
-import { fetAllDrinksByCategory } from '../../services';
+import { fetAllDrinksByCategory, fetDrinks } from '../../services';
 import { setFoodAndDrinks } from '../../redux/actions';
 
 export default function CategoryBtnDrinks({ index, categoryName }) {
+  const [verify, setVerify] = useState(true);
   const dispatch = useDispatch();
 
   const handleClick = async () => {
-    const data = await fetAllDrinksByCategory(categoryName);
-    dispatch(setFoodAndDrinks(data));
+    if (verify) {
+      const data = await fetAllDrinksByCategory(categoryName);
+      dispatch(setFoodAndDrinks(data));
+      setVerify(false);
+    } else {
+      const response = await fetDrinks();
+      dispatch(setFoodAndDrinks(response));
+    }
   };
 
   return (
@@ -22,7 +29,6 @@ export default function CategoryBtnDrinks({ index, categoryName }) {
       >
         { categoryName }
       </button>
-
     </section>
   );
 }
