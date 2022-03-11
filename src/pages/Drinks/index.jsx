@@ -11,6 +11,7 @@ import {
   setDrinksCategory,
   verifyExploreClick,
 } from '../../redux/actions';
+import CategoryAllDrinks from '../../components/CategoryAllDrinks';
 
 function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
@@ -35,10 +36,9 @@ function Drinks() {
     } else {
       dispatch(verifyExploreClick(false));
     }
+  }, [getDrinks]);
   };
-
   useEffect(verifyRedirect, [dispatch, getDrinks]);
-
   const getCategoryDrinks = useCallback(async () => {
     const response = await fetDrinksCategories();
 
@@ -52,6 +52,7 @@ function Drinks() {
   return (
     <section>
       <Header title="Drinks" search />
+      <CategoryAllDrinks />
       {
         btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnDrinks
@@ -67,6 +68,8 @@ function Drinks() {
           type="recipe"
           src={ e.strDrinkThumb }
           titleCard={ e.strDrink }
+          foods="drinks"
+          id={ e.idDrink }
         />
       ))}
       <Footer />
