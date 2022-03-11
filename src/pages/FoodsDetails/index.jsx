@@ -1,30 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useRouteMatch, useHistory } from 'react-router-dom';
-import clipBoard from 'clipboard-copy';
+import { useRouteMatch } from 'react-router-dom';
 
 import useIngretientes from '../../hooks';
-import { actionAddFavorite, removeFavorites,
-  setFoodAndDrinks, actionAddDone, setInProgressRecipes } from '../../redux/actions';
+import { actionAddDone, setFoodAndDrinks } from '../../redux/actions';
 import { getDrink, getFood } from '../../services';
-import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 export default function FoodsDetails() {
   const { params: { id } } = useRouteMatch();
   const [recommended, setRecommended] = useState([]);
-  const [share, setShare] = useState('share');
-  const { responseFoodAndDrinks, favoriteRecipes,
-    doneRecipes, inProgressRecipes } = useSelector((state) => state);
-  const [isFavorite, setIsFavorite] = useState(favoriteRecipes.some((e) => e.id === id));
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
+  const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks[0]);
+  const doneRecipes = useSelector((state) => state.doneRecipes);
+  const [ingredientes, quantities] = useIngretientes(data);
   const ID_ENPOINT = 'lookup.php?i=';
   const MAX_LENGH_RECOMMENDED = 6;
+  const doneLocalStorage = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  const progressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'))
+  || { meals: [], cocktails: [] };
   const isDoneRecipe = doneRecipes.some((e) => e.idMeal === id)
-  || doneRecipes.some((e) => e.id === id);
-  const isProgress = inProgressRecipes.meals[id];
+  || doneLocalStorage.some((e) => e.id === id);
+  const isProgress = progressStorage.meals[id];
 
   const setFood = useCallback(async () => {
     dispatch(setFoodAndDrinks(await getFood(`${ID_ENPOINT}${id}`)));
@@ -36,75 +32,29 @@ export default function FoodsDetails() {
   }, [setFood]);
 
   function startRecipe() {
-    dispatch(actionAddDone(responseFoodAndDrinks[0]));
-    dispatch(setInProgressRecipes('meals', { [id]: [] }));
-    history.push(`${id}/in-progress`);
-  }
-
-  function copyLink() {
-    clipBoard(`http://localhost:3000/foods/${id}`);
-    setShare('Link copied!');
-  }
-
-  function setFavorite() {
-    const objFavorites = {
-      id,
-      type: 'food',
-      nationality: responseFoodAndDrinks[0].strArea,
-      category: responseFoodAndDrinks[0].strCategory,
-      alcoholicOrNot: '',
-      name: responseFoodAndDrinks[0].strMeal,
-      image: responseFoodAndDrinks[0].strMealThumb,
-    };
-    setIsFavorite(!isFavorite);
-    setIsFavorite(!isFavorite);
-    if (isFavorite) {
-      dispatch(removeFavorites(id));
-    } else {
-      dispatch(actionAddFavorite(objFavorites));
-      localStorage.setItem('favoriteRecipes',
-        JSON.stringify([...favoriteRecipes, objFavorites]));
-    }
+    const dataForTest = { ...data, id };
+    const progressForTest = { ...progressStorage, meals: { [id]: [] } };
+    dispatch(actionAddDone(data));
+    localStorage.setItem('doneRecipes',
+      JSON.stringify([...doneLocalStorage, dataForTest]));
+    localStorage.setItem('inProgressRecipes',
+      JSON.stringify(progressForTest));
   }
 
   return (
     <div>
       <section>
-        {responseFoodAndDrinks[0] && (
+        {data && (
           <>
             <section>
-              <img
-                data-testid="recipe-photo"
-                src={ responseFoodAndDrinks[0].strMealThumb }
-                alt=""
-              />
+              <img data-testid="recipe-photo" src={ data.strMealThumb } alt="" />
               <div>
-                <h1 data-testid="recipe-title">{responseFoodAndDrinks[0].strMeal}</h1>
-                <h3
-                  data-testid="recipe-category"
-                >
-                  {responseFoodAndDrinks[0].strCategory}
-                </h3>
+                <h1 data-testid="recipe-title">{data.strMeal}</h1>
+                <h3 data-testid="recipe-category">{data.strCategory}</h3>
               </div>
               <div>
-                <button
-                  data-testid="share-btn"
-                  type="button"
-                  onClick={ copyLink }
-                >
-                  {share}
-
-                </button>
-                <button
-                  type="button"
-                  onClick={ setFavorite }
-                >
-                  <img
-                    data-testid="favorite-btn"
-                    src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                    alt=""
-                  />
-                </button>
+                <button data-testid="share-btn" type="button">share</button>
+                <button data-testid="favorite-btn" type="button">favorite</button>
               </div>
             </section>
             <section>
@@ -122,18 +72,14 @@ export default function FoodsDetails() {
             </section>
             <section>
               <h3>Instructions</h3>
-              <p
-                data-testid="instructions"
-              >
-                { responseFoodAndDrinks[0].strInstructions}
-              </p>
+              <p data-testid="instructions">{ data.strInstructions}</p>
             </section>
             <section>
               <h3>Video</h3>
               <iframe
                 data-testid="video"
-                src={ responseFoodAndDrinks[0].strYoutube }
-                title={ responseFoodAndDrinks[0].strMeal }
+                src={ data.strYoutube }
+                title={ data.strMeal }
                 frameBorder="0"
               />
             </section>

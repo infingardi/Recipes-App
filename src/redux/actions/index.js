@@ -4,8 +4,6 @@ export const ADD_DONE_TYPE = 'ADD_DONE';
 export const SET_FOOD_DRINKS_TYPE = 'SET_FOOD_DRINKS';
 export const SET_MEALS_CATEGORIES = 'SET_MEALS_CATEGORIES';
 export const SET_DRINKS_CATEGORIES = 'SET_DRINKS_CAGEGORIES';
-export const REMOVE_FAVORITE_TYPE = 'REMOVE_FAVORITE';
-export const ADD_PROGRESS_RECIPES_TYPE = 'ADD_PROGRESS_RECIPES';
 export const VERIFY_EXPLORE_CLICK = 'VERIFY_EXPLORE_CLICK';
 export const VERIFY_CATEGORY_SELECTED = 'VERIFY_CATEGORY_SELECTED';
 
@@ -14,10 +12,11 @@ export const actionLogin = (newEmail) => ({
   payload: newEmail,
 });
 
-export const actionAddFavorite = (newFavorite) => ({
-  type: ADD_FAVORITE_TYPE,
-  payload: newFavorite,
-});
+export function actionAddFavorite() {
+  return {
+    type: ADD_FAVORITE_TYPE,
+  };
+}
 
 export const actionAddDone = (doneRecipe) => ({
   type: ADD_DONE_TYPE,
@@ -37,17 +36,6 @@ export const setMealsCategory = (mealsCategoryResponse) => ({
 export const setDrinksCategory = (drinksCategoryResponse) => ({
   type: SET_DRINKS_CATEGORIES,
   payload: drinksCategoryResponse,
-});
-
-export const removeFavorites = (id) => ({
-  type: REMOVE_FAVORITE_TYPE,
-  payload: id,
-});
-
-export const setInProgressRecipes = (destiny, newProgress) => ({
-  type: ADD_PROGRESS_RECIPES_TYPE,
-  payload: newProgress,
-  destiny,
 });
 
 export function verifyExploreClick(isClickedInExplore) {

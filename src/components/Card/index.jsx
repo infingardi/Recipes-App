@@ -10,7 +10,6 @@ export default function Card({ src, titleCard, index, type, id, foods }) {
       data-testid={ `${index}-${type}-card` }
       onClick={ () => history.push(`/${foods}/${id}`) }
       key={ index }
-      className="card-class"
     >
       <img data-testid={ `${index}-card-img` } src={ src } alt={ titleCard } />
       <h3 data-testid={ `${index}-card-name` }>{titleCard}</h3>
