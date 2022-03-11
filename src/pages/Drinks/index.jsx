@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Header from '../../components/Header';
@@ -11,11 +11,11 @@ import {
   setDrinksCategory,
   verifyExploreClick,
 } from '../../redux/actions';
-import CategoryAllDrinks from '../../components/CategoryAllDrinks';
 
 function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
   const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
+  const verifyRef = useRef(verify);
   const btnCategories = useSelector(
     ({ drinksCategoryResponse }) => drinksCategoryResponse,
   );
@@ -29,13 +29,15 @@ function Drinks() {
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
-  useEffect(() => { // verifica se ele foi redirecionado pela pagina de explore
-    if (!verify) { // caso tenha sido ele não ira fazer uma nova requisição a API
+  const verifyRedirect = () => { // verifica se ele foi redirecionado pela pagina de explore
+    if (!verifyRef) { // caso tenha sido ele não ira fazer uma nova requisição a API
       getDrinks();
     } else {
       dispatch(verifyExploreClick(false));
     }
-  }, [getDrinks]);
+  };
+
+  useEffect(verifyRedirect, [dispatch, getDrinks]);
 
   const getCategoryDrinks = useCallback(async () => {
     const response = await fetDrinksCategories();
@@ -50,7 +52,6 @@ function Drinks() {
   return (
     <section>
       <Header title="Drinks" search />
-      <CategoryAllDrinks />
       {
         btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnDrinks
@@ -66,8 +67,6 @@ function Drinks() {
           type="recipe"
           src={ e.strDrinkThumb }
           titleCard={ e.strDrink }
-          foods="drinks"
-          id={ e.idDrink }
         />
       ))}
       <Footer />
