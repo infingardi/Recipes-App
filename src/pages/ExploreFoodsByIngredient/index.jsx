@@ -42,7 +42,7 @@ function ExploreFoodsByIngredient() {
           type="ingredient"
           src={ `https://www.themealdb.com/images/ingredients/${e.strIngredient}-Small.png` }
           titleCard={ e.strIngredient }
-          onClick={ handleClick }
+          onClick={ () => handleClick(e.strIngredient) }
         />);
       })}
       <Footer />
