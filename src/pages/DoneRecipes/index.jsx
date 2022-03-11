@@ -8,7 +8,7 @@ function DoneRecipes() {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    const doneRecipesData = JSON.parse(localStorage.getItem('doneRecipes'));
+    const doneRecipesData = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     setDoneRecipes(doneRecipesData);
   }, []);
 
