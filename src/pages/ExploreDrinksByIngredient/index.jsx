@@ -41,7 +41,7 @@ function ExploreDrinksByIngredient() {
           type="ingredient"
           src={ `https://www.thecocktaildb.com/images/ingredients/${e.strIngredient1}-Small.png` }
           titleCard={ e.strIngredient1 }
-          onClick={ handleClick }
+          onClick={ () => handleClick(e.strIngredient1) }
         />
       ))}
       <Footer />
