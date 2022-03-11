@@ -39,7 +39,7 @@ export default function InProgress() {
       dispatch(setInProgressRecipes(name, { [id]: [] }));
       newProgress();
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, name, storage, newProgress]);
 
   function copyLink() {
     clipBoard(`http://localhost:3000${rota}`);
