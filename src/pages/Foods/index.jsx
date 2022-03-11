@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Card from '../../components/Card';
@@ -17,6 +17,7 @@ import CategoryAllMeals from '../../components/CategoryAllMeals';
 function Foods() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
   const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
+  const verifyRef = useRef(verify);
   const btnCategories = useSelector(({ mealsCategoryResponse }) => mealsCategoryResponse);
 
   const MAX_LENGTH = 12;
@@ -29,13 +30,15 @@ function Foods() {
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
-  useEffect(() => { // verifica se ele foi redirecionado pela pagina de explore
-    if (!verify) { // caso tenha sido ele não ira fazer uma nova requisição a API
+  const verifyRedirect = () => { // verifica se ele foi redirecionado pela pagina de explore
+    if (!verifyRef) { // caso tenha sido ele não ira fazer uma nova requisição a API
       getMeals();
     } else {
       dispatch(verifyExploreClick(false));
     }
-  }, [getMeals]);
+  };
+
+  useEffect(verifyRedirect, [dispatch, getMeals]);
 
   const getCategoryMeals = useCallback(async () => {
     const response = await fetMealsCategories();
