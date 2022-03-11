@@ -135,12 +135,9 @@ export default function DrinkDetails() {
           <div>
             {recommended.meals && recommended.meals.slice(0, MAX_LENGH_RECOMMENDED)
               .map((e, i) => (
-                <div
-                  key={ e.idMeal }
-                  data-testid={ `${i}-recomendation-card` }
-                >
+                <div key={ e.idMeal } data-testid={ `${i}-recomendation-card` }>
                   <img src={ e.strMealThumb } alt="" width="200px" />
-                  <span>{e.strAlcoholic}</span>
+                  <span>{e.strCategory}</span>
                   <h4 data-testid={ `${i}-recomendation-title` }>{e.strMeal}</h4>
                 </div>
               ))}

@@ -12,13 +12,13 @@ import {
   setMealsCategory,
   verifyExploreClick,
 } from '../../redux/actions';
+import CategoryAllMeals from '../../components/CategoryAllMeals';
 
 function Foods() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
   const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
   const verifyRef = useRef(verify);
   const btnCategories = useSelector(({ mealsCategoryResponse }) => mealsCategoryResponse);
-
   const MAX_LENGTH = 12;
   const MAX_LENGTH_CATEGORIES = 5;
 
@@ -35,6 +35,7 @@ function Foods() {
     } else {
       dispatch(verifyExploreClick(false));
     }
+  }, [getMeals]);
   };
 
   useEffect(verifyRedirect, [dispatch, getMeals]);
@@ -51,6 +52,7 @@ function Foods() {
   return (
     <section>
       <Header title="Foods" search />
+      <CategoryAllMeals />
       {
         btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnMeals
@@ -67,6 +69,8 @@ function Foods() {
           type="recipe"
           src={ e.strMealThumb }
           titleCard={ e.strMeal }
+          foods="foods"
+          id={ e.idMeal }
         />
       ))}
       <Footer />
