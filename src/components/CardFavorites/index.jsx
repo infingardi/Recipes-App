@@ -4,7 +4,18 @@ import PropTypes from 'prop-types';
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
-export default function CardFavorites({ key, index, img, name, nationality, category, alcoholic, foods }) {
+export default function CardFavorites({
+  key,
+  index,
+  img,
+  name,
+  nationality,
+  category,
+  alcoholic,
+  foods,
+  onClick,
+  share,
+}) {
   return (
     <button
       type="button"
@@ -14,24 +25,22 @@ export default function CardFavorites({ key, index, img, name, nationality, cate
       // className="card-class"
     >
       <img data-testid={ `${index}-horizontal-image` } src={ img } alt={ name } />
-      {
-        console.log(index)
-      }
       <h3 data-testid={ `${index}-horizontal-name` }>{name}</h3>
-      {/* <p>{ nationality }</p> */}
       <p data-testid={ `${index}-horizontal-top-text` }>
-        {
-          `${nationality} - ${category} && ${alcoholic}`
-        }
+        { (foods === 'food') ? `${nationality} - ${category}` : `${alcoholic}`}
       </p>
       <button
         type="button"
+        onClick={ onClick }
       >
-        <img
-          src={ shareIcon }
-          alt={ name }
+        <section
           data-testid={ `${index}-horizontal-share-btn` }
-        />
+          src={ shareIcon }
+        >
+          {share
+            ? <img src={ shareIcon } alt={ name } />
+            : <p>Link copied!</p>}
+        </section>
       </button>
       <button
         type="button"

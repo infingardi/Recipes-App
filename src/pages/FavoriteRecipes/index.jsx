@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import clipBoard from 'clipboard-copy';
 import CardFavorites from '../../components/CardFavorites';
 
 import Header from '../../components/Header';
 
 function FavoriteRecipes() {
   const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  console.log(data);
+  const [share, setShare] = useState(true);
+
+  // const handleClick = () => {
+  //   alert('Link copied!');
+  // };
 
   return (
     <div>
@@ -40,7 +45,12 @@ function FavoriteRecipes() {
             nationality={ favorites.nationality }
             category={ favorites.category }
             alcoholic={ favorites.alcoholicOrNot }
-            foods={ favorites.types }
+            foods={ favorites.type }
+            share={ share }
+            onClick={ () => {
+              clipBoard(`http://localhost:3000/${favorites.type}s/${favorites.id}`);
+              setShare(false);
+            } }
           />
         ))
       }
