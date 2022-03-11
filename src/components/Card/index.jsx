@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-export default function Card({ src, titleCard, index, type, id, foods }) {
+
+export default function Card({ src, titleCard, index, type, id, foods, onClick }) {
   const history = useHistory();
   return (
     <button
@@ -10,6 +11,8 @@ export default function Card({ src, titleCard, index, type, id, foods }) {
       data-testid={ `${index}-${type}-card` }
       onClick={ () => history.push(`/${foods}/${id}`) }
       key={ index }
+      // onClick={ () => onClick(titleCard) }
+      className="card-class"
     >
       <img data-testid={ `${index}-card-img` } src={ src } alt={ titleCard } />
       <h3 data-testid={ `${index}-card-name` }>{titleCard}</h3>
