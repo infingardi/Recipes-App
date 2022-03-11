@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import Card from '../../components/Card';
@@ -17,6 +18,7 @@ function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
   const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
   const verifyRef = useRef(verify);
+  const history = useHistory();
   const btnCategories = useSelector(
     ({ drinksCategoryResponse }) => drinksCategoryResponse,
   );
@@ -31,13 +33,13 @@ function Drinks() {
   }, [dispatch]);
 
   const verifyRedirect = () => { // verifica se ele foi redirecionado pela pagina de explore
-    if (!verifyRef) { // caso tenha sido ele não ira fazer uma nova requisição a API
+    if (!verifyRef.current) { // caso tenha sido ele não ira fazer uma nova requisição a API
       getDrinks();
     } else {
       dispatch(verifyExploreClick(false));
     }
-  }, [getDrinks]);
   };
+
   useEffect(verifyRedirect, [dispatch, getDrinks]);
   const getCategoryDrinks = useCallback(async () => {
     const response = await fetDrinksCategories();
@@ -68,8 +70,7 @@ function Drinks() {
           type="recipe"
           src={ e.strDrinkThumb }
           titleCard={ e.strDrink }
-          foods="drinks"
-          id={ e.idDrink }
+          onClick={ () => history.push(`/drinks/${e.idDrink}`) }
         />
       ))}
       <Footer />

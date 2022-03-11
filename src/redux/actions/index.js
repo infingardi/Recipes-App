@@ -9,7 +9,6 @@ export const REMOVE_FAVORITE_TYPE = 'REMOVE_FAVORITE';
 export const ADD_PROGRESS_RECIPES_TYPE = 'ADD_PROGRESS_RECIPES';
 export const VERIFY_EXPLORE_CLICK = 'VERIFY_EXPLORE_CLICK';
 
-
 export const actionLogin = (newEmail) => ({
   type: ADD_LOGIN_TYPE,
   payload: newEmail,
