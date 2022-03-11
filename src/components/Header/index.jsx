@@ -6,7 +6,7 @@ import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import RedirectButtonImg from '../RedirectButtonImg';
 
-function Header({ title, search = false }) {
+function Header({ title, search }) {
   const [isSearching, setIsSearching] = useState(false);
 
   return (
@@ -39,7 +39,11 @@ function Header({ title, search = false }) {
 
 Header.propTypes = {
   title: Proptypes.string.isRequired,
-  search: Proptypes.bool.isRequired,
+  search: Proptypes.bool,
+};
+
+Header.defaultProps = {
+  search: false,
 };
 
 export default Header;

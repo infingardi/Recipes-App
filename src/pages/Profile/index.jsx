@@ -14,7 +14,8 @@ function Profile() {
   };
 
   useEffect(() => {
-    const { email } = JSON.parse(localStorage.getItem('user'));
+    const { email } = JSON.parse(localStorage.getItem('user'))
+    || { email: 'email@email.com' };
     setEmailProfile(email);
   }, []);
 
