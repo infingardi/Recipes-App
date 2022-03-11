@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useHistory } from 'react-router-dom';
 import Card from '../../components/Card';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -19,6 +20,7 @@ function Foods() {
   const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
   const verifyRef = useRef(verify);
   const btnCategories = useSelector(({ mealsCategoryResponse }) => mealsCategoryResponse);
+  const history = useHistory();
   const MAX_LENGTH = 12;
   const MAX_LENGTH_CATEGORIES = 5;
 
@@ -30,12 +32,11 @@ function Foods() {
   }, [dispatch]);
 
   const verifyRedirect = () => { // verifica se ele foi redirecionado pela pagina de explore
-    if (!verifyRef) { // caso tenha sido ele não ira fazer uma nova requisição a API
+    if (!verifyRef.current) { // caso tenha sido ele não ira fazer uma nova requisição a API
       getMeals();
     } else {
       dispatch(verifyExploreClick(false));
     }
-  }, [getMeals]);
   };
 
   useEffect(verifyRedirect, [dispatch, getMeals]);
@@ -69,8 +70,9 @@ function Foods() {
           type="recipe"
           src={ e.strMealThumb }
           titleCard={ e.strMeal }
-          foods="foods"
-          id={ e.idMeal }
+          // foods="foods"
+          onClick={ () => history.push(`/foods/${e.idMeal}`) }
+          // id={ e.idMeal }
         />
       ))}
       <Footer />
