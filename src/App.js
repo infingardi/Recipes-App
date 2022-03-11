@@ -13,6 +13,7 @@ import DrinksDetails from './pages/DrinkDetails';
 import Explore from './pages/Explore';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
+import InProgress from './pages/InProgress';
 import ExploreFoodsByIngredient from './pages/ExploreFoodsByIngredient';
 import ExploreDrinksByIngredient from './pages/ExploreDrinksByIngredient';
 import ExploreFoodsByNationality from './pages/ExploreFoodsByNationality';
@@ -28,6 +29,8 @@ function App() {
       <Route exact path="/foods" component={ Foods } />
       <Route exact path="/drinks" component={ Drinks } />
       <Route exact path="/foods/:id" component={ FoodsDetails } />
+      <Route exact path="/foods/:id/in-progress" component={ InProgress } />
+      <Route exact path="/drinks/:id/in-progress" component={ InProgress } />
       <Route exact path="/drinks/:id" component={ DrinksDetails } />
 
       <Route exact path="/explore" component={ Explore } />

@@ -8,6 +8,7 @@ import {
   REMOVE_FAVORITE_TYPE,
   ADD_PROGRESS_RECIPES_TYPE,
   VERIFY_EXPLORE_CLICK,
+  REMOVE_PROGRESS_RECIPES_TYPE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -64,6 +65,14 @@ const rootReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       inProgressRecipes: { ...state.inProgressRecipes, [action.destiny]: action.payload },
+    };
+  case REMOVE_PROGRESS_RECIPES_TYPE:
+    return {
+      ...state,
+      inProgressRecipes: { ...state.inProgressRecipes,
+        [action.destiny]: {
+          ...state.inProgressRecipes[action.destiny], ...action.payload,
+        } },
     };
   default:
     return state;

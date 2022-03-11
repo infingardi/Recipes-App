@@ -1,48 +1,40 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import clipBoard from 'clipboard-copy';
 
 import { useIngretientes, useUpdateInProgress } from '../../hooks';
-import { actionAddFavorite, removeFavorites,
-  setFoodAndDrinks, actionAddDone, setInProgressRecipes } from '../../redux/actions';
-import { getDrink, getFood } from '../../services';
+import { actionAddFavorite, removeFavorites, setFoodAndDrinks,
+  setInProgressRecipes } from '../../redux/actions';
+import { getFood } from '../../services';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import InputCheck from '../../components/InputCheck';
 
-export default function FoodsDetails() {
+export default function InProgress() {
   const { id } = useParams();
-  const { newProgress } = useUpdateInProgress('meals');
-  const [recommended, setRecommended] = useState([]);
   const [share, setShare] = useState('share');
-  const { responseFoodAndDrinks, favoriteRecipes,
-    doneRecipes, inProgressRecipes } = useSelector((state) => state);
+  const { newProgress, storage } = useUpdateInProgress('meals');
+  const { responseFoodAndDrinks, favoriteRecipes } = useSelector((state) => state);
   const [isFavorite, setIsFavorite] = useState(favoriteRecipes.some((e) => e.id === id));
   const dispatch = useDispatch();
-  const history = useHistory();
   const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
   const ID_ENPOINT = 'lookup.php?i=';
-  const MAX_LENGH_RECOMMENDED = 6;
-  const isDoneRecipe = doneRecipes.some((e) => e.idMeal === id)
-  || doneRecipes.some((e) => e.id === id);
-  const isProgress = inProgressRecipes.meals[id];
 
   const setFood = useCallback(async () => {
     dispatch(setFoodAndDrinks(await getFood(`${ID_ENPOINT}${id}`)));
-    setRecommended(await getDrink('search.php?s='));
   }, [dispatch, id]);
 
   useEffect(() => {
     setFood();
   }, [setFood]);
 
-  function startRecipe() {
-    dispatch(actionAddDone(responseFoodAndDrinks[0]));
-    dispatch(setInProgressRecipes('meals', { [id]: [] }));
-    newProgress();
-
-    history.push(`${id}/in-progress`);
-  }
+  useEffect(() => {
+    if (!storage.meals[id]) {
+      dispatch(setInProgressRecipes('meals', { [id]: [] }));
+      newProgress();
+    }
+  }, [dispatch, id]);
 
   function copyLink() {
     clipBoard(`http://localhost:3000/foods/${id}`);
@@ -60,9 +52,10 @@ export default function FoodsDetails() {
       image: responseFoodAndDrinks[0].strMealThumb,
     };
     setIsFavorite(!isFavorite);
-    setIsFavorite(!isFavorite);
     if (isFavorite) {
       dispatch(removeFavorites(id));
+      localStorage.setItem('favoriteRecipes',
+        JSON.stringify(favoriteRecipes.filter((f) => f.id !== id)));
     } else {
       dispatch(actionAddFavorite(objFavorites));
       localStorage.setItem('favoriteRecipes',
@@ -112,16 +105,15 @@ export default function FoodsDetails() {
             </section>
             <section>
               <h3>Ingredients</h3>
-              <ul>
+              <div>
                 {ingredientes.map((e, i) => (
-                  <li key={ i } data-testid={ `${i}-ingredient-name-and-measure` }>
-                    {e[1]}
-                    {' '}
-                    {quantities[i][1]}
-                  </li>
+                  <InputCheck
+                    key={ i }
+                    text={ `${e[1]} ${quantities[i][1]}` }
+                    index={ i }
+                  />
                 ))}
-
-              </ul>
+              </div>
             </section>
             <section>
               <h3>Instructions</h3>
@@ -131,54 +123,10 @@ export default function FoodsDetails() {
                 { responseFoodAndDrinks[0].strInstructions}
               </p>
             </section>
-            <section>
-              <h3>Video</h3>
-              <iframe
-                data-testid="video"
-                src={ responseFoodAndDrinks[0].strYoutube }
-                title={ responseFoodAndDrinks[0].strMeal }
-                frameBorder="0"
-              />
-            </section>
           </>
         )}
-        {/* Recommended */}
-        <section className="carrocel-container">
-          <h3>Recommended</h3>
-          <div>
-            {recommended.drinks && recommended.drinks.slice(0, MAX_LENGH_RECOMMENDED)
-              .map((e, i) => (
-                <div
-                  key={ e.idDrink }
-                  data-testid={ `${i}-recomendation-card` }
-                >
-                  <img src={ e.strDrinkThumb } alt="" width="200px" />
-                  <span>{e.strAlcoholic}</span>
-                  <h4 data-testid={ `${i}-recomendation-title` }>{e.strDrink}</h4>
-                </div>
-              ))}
-          </div>
-        </section>
+        <button type="button" data-testid="finish-recipe-btn">Finish Recipe</button>
       </section>
-      {!isDoneRecipe && (
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          style={ { position: 'fixed', bottom: '0' } }
-          onClick={ startRecipe }
-        >
-          Start recipe
-        </button>
-      )}
-      {isProgress && (
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          style={ { position: 'fixed', bottom: '0' } }
-        >
-          Continue Recipe
-        </button>
-      )}
     </div>
   );
 }

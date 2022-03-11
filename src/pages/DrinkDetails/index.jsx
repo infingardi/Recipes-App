@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useRouteMatch, useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import clipBoard from 'clipboard-copy';
 
-import useIngretientes from '../../hooks';
+import { useIngretientes, useUpdateInProgress } from '../../hooks';
 import { actionAddFavorite, removeFavorites,
   setFoodAndDrinks, actionAddDone, setInProgressRecipes } from '../../redux/actions';
 import { getDrink, getFood } from '../../services';
@@ -11,7 +11,8 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 export default function DrinkDetails() {
-  const { params: { id } } = useRouteMatch();
+  const { id } = useParams();
+  const { newProgress } = useUpdateInProgress('cocktails');
   const [recommended, setRecommended] = useState([]);
   const [share, setShare] = useState('share');
   const { responseFoodAndDrinks, favoriteRecipes,
@@ -38,6 +39,8 @@ export default function DrinkDetails() {
   function startRecipe() {
     dispatch(actionAddDone(responseFoodAndDrinks[0]));
     dispatch(setInProgressRecipes('drinks', { [id]: [] }));
+    newProgress();
+
     history.push(`${id}/in-progress`);
   }
 
