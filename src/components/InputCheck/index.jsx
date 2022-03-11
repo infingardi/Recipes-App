@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useUpdateInProgress } from '../../hooks';
+import testando from '../../helper';
 import { RemoveProgress, setInProgressRecipes } from '../../redux/actions';
 import './index.css';
 
 export default function InputCheck({ text, index }) {
   const { id } = useParams();
-  const { addCheck, removeCheck, storage } = useUpdateInProgress('meals');
-  const [isChecked, setIsChecked] = useState(storage.meals[id].includes(text));
+  const { pathname } = useLocation();
+  const test = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
+  const { name } = testando()[test];
+  const { addCheck, removeCheck, storage } = useUpdateInProgress(name);
+  // console.log(storage[name]);
+  const [isChecked, setIsChecked] = useState(storage[name][id].includes(text));
   const { inProgressRecipes } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   function checkList({ target: { checked, parentElement } }) {
-    const newCheck = { [id]: [...inProgressRecipes.meals[id], parentElement.innerText] };
+    const newCheck = { [id]: [...inProgressRecipes[name][id], parentElement.innerText] };
     setIsChecked((old) => !old);
     if (checked) {
       addCheck(parentElement.innerText);
-      dispatch(setInProgressRecipes('meals', newCheck));
+      dispatch(setInProgressRecipes(name, newCheck));
     } else {
       removeCheck(parentElement.innerText);
-      dispatch(RemoveProgress('meals', { [id]: inProgressRecipes.meals[id]
+      dispatch(RemoveProgress(name, { [id]: inProgressRecipes[name][id]
         .filter((f) => f !== parentElement.innerText) }));
     }
   }

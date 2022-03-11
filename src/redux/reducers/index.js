@@ -14,7 +14,7 @@ import {
 const INITIAL_STATE = {
   user: { email: '' },
   mealsToken: 1,
-  responseFoodAndDrinks: [],
+  responseFoodAndDrinks: [{}],
   cocktailsToken: 1,
   doneRecipes: JSON.parse(localStorage.getItem('doneRecipes')) || [],
   favoriteRecipes: JSON.parse(localStorage.getItem('favoriteRecipes')) || [],

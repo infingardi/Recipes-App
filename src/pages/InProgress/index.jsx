@@ -1,56 +1,52 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import clipBoard from 'clipboard-copy';
 
 import { useIngretientes, useUpdateInProgress } from '../../hooks';
 import { actionAddFavorite, removeFavorites, setFoodAndDrinks,
   setInProgressRecipes } from '../../redux/actions';
-import { getFood } from '../../services';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import InputCheck from '../../components/InputCheck';
+import testando from '../../helper';
 
 export default function InProgress() {
   const { id } = useParams();
-  const [share, setShare] = useState('share');
-  const { newProgress, storage } = useUpdateInProgress('meals');
+  const history = useHistory();
+  const { pathname } = useLocation();
+  const test = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
   const { responseFoodAndDrinks, favoriteRecipes } = useSelector((state) => state);
+  const { get, name, strCategory, objFavorites, rota,
+    strInstructions, strThumb, strTitle } = testando(responseFoodAndDrinks)[test];
+  const [share, setShare] = useState('share');
+  const { newProgress, storage } = useUpdateInProgress(name);
+  const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
   const [isFavorite, setIsFavorite] = useState(favoriteRecipes.some((e) => e.id === id));
   const dispatch = useDispatch();
-  const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
   const ID_ENPOINT = 'lookup.php?i=';
 
-  const setFood = useCallback(async () => {
-    dispatch(setFoodAndDrinks(await getFood(`${ID_ENPOINT}${id}`)));
-  }, [dispatch, id]);
+  const setFoodAndDrink = useCallback(async () => {
+    dispatch(setFoodAndDrinks(await get(`${ID_ENPOINT}${id}`)));
+  }, [dispatch, id, get]);
 
   useEffect(() => {
-    setFood();
-  }, [setFood]);
+    setFoodAndDrink();
+  }, [setFoodAndDrink]);
 
   useEffect(() => {
-    if (!storage.meals[id]) {
-      dispatch(setInProgressRecipes('meals', { [id]: [] }));
+    if (!storage[name][id]) {
+      dispatch(setInProgressRecipes(name, { [id]: [] }));
       newProgress();
     }
   }, [dispatch, id]);
 
   function copyLink() {
-    clipBoard(`http://localhost:3000/foods/${id}`);
+    clipBoard(`http://localhost:3000${rota}`);
     setShare('Link copied!');
   }
 
   function setFavorite() {
-    const objFavorites = {
-      id,
-      type: 'food',
-      nationality: responseFoodAndDrinks[0].strArea,
-      category: responseFoodAndDrinks[0].strCategory,
-      alcoholicOrNot: '',
-      name: responseFoodAndDrinks[0].strMeal,
-      image: responseFoodAndDrinks[0].strMealThumb,
-    };
     setIsFavorite(!isFavorite);
     if (isFavorite) {
       dispatch(removeFavorites(id));
@@ -71,15 +67,15 @@ export default function InProgress() {
             <section>
               <img
                 data-testid="recipe-photo"
-                src={ responseFoodAndDrinks[0].strMealThumb }
+                src={ responseFoodAndDrinks[0][strThumb] }
                 alt=""
               />
               <div>
-                <h1 data-testid="recipe-title">{responseFoodAndDrinks[0].strMeal}</h1>
+                <h1 data-testid="recipe-title">{responseFoodAndDrinks[0][strTitle]}</h1>
                 <h3
                   data-testid="recipe-category"
                 >
-                  {responseFoodAndDrinks[0].strCategory}
+                  {responseFoodAndDrinks[0][strCategory]}
                 </h3>
               </div>
               <div>
@@ -120,12 +116,20 @@ export default function InProgress() {
               <p
                 data-testid="instructions"
               >
-                { responseFoodAndDrinks[0].strInstructions}
+                { responseFoodAndDrinks[0][strInstructions]}
               </p>
             </section>
           </>
         )}
-        <button type="button" data-testid="finish-recipe-btn">Finish Recipe</button>
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ storage[name][id]
+            ? storage[name][id].length !== ingredientes.length : null }
+          onClick={ () => history.push('/done-recipes') }
+        >
+          Finish Recipe
+        </button>
       </section>
     </div>
   );
