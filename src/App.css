@@ -14,11 +14,12 @@ img {
 .carrocel-container > div {
   display: flex;
   overflow: auto;
-  width: 1800px;
+  width: 100%;
 }
 
-.carrocel-container > div > div {
-  width: 200px;
+.carrocel-container img {
+  transform: scale(0.95);
+  width: 180px;
 }
 
 .card-class img {

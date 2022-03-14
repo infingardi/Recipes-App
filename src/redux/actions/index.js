@@ -8,6 +8,7 @@ export const VERIFY_CATEGORY_SELECTED = 'VERIFY_CATEGORY_SELECTED';
 export const REMOVE_FAVORITE_TYPE = 'REMOVE_FAVORITE';
 export const ADD_PROGRESS_RECIPES_TYPE = 'ADD_PROGRESS_RECIPES';
 export const VERIFY_EXPLORE_CLICK = 'VERIFY_EXPLORE_CLICK';
+export const REMOVE_PROGRESS_RECIPES_TYPE = 'REMOVE_PROGRESS_RECIPES';
 
 export const actionLogin = (newEmail) => ({
   type: ADD_LOGIN_TYPE,
@@ -56,3 +57,9 @@ export function verifyExploreClick(isClickedInExplore) {
     payload: isClickedInExplore,
   };
 }
+
+export const RemoveProgress = (destiny, newProgress) => ({
+  type: REMOVE_PROGRESS_RECIPES_TYPE,
+  payload: newProgress,
+  destiny,
+});
