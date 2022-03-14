@@ -41,8 +41,8 @@ function FavoriteRecipes() {
           Drink
         </button>
       </section>
-      {
-        data.filter((type) => type.type.includes(filter)).map((favorites, index) => (
+      { data
+        ? data.filter((type) => type.type.includes(filter)).map((favorites, index) => (
           <CardFavorites
             change={ setData }
             key={ favorites.id }
@@ -60,7 +60,7 @@ function FavoriteRecipes() {
             } }
           />
         ))
-      }
+        : (<h3>vc ainda n tem favorito</h3>)}
     </div>
   );
 }

@@ -36,7 +36,12 @@ export default function CardFavorites({
       <Link
         to={ `/${foods}s/${id}` }
       >
-        <img data-testid={ `${index}-horizontal-image` } src={ img } alt={ name } />
+        <img
+          className="img-favorites"
+          data-testid={ `${index}-horizontal-image` }
+          src={ img }
+          alt={ name }
+        />
         <h3 data-testid={ `${index}-horizontal-name` }>{name}</h3>
       </Link>
       <p data-testid={ `${index}-horizontal-top-text` }>
