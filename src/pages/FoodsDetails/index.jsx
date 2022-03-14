@@ -156,7 +156,7 @@ export default function FoodsDetails() {
                   key={ e.idDrink }
                   data-testid={ `${i}-recomendation-card` }
                 >
-                  <img src={ e.strDrinkThumb } alt="" />
+                  <img src={ e.strDrinkThumb } alt="" width="200px" />
                   <span>{e.strAlcoholic}</span>
                   <h4 data-testid={ `${i}-recomendation-title` }>{e.strDrink}</h4>
                 </div>
@@ -179,6 +179,7 @@ export default function FoodsDetails() {
           data-testid="start-recipe-btn"
           type="button"
           style={ { position: 'fixed', bottom: '0' } }
+          onClick={ () => history.push(`${id}/in-progress`) }
         >
           Continue Recipe
         </button>
