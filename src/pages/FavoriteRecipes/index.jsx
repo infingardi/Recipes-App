@@ -5,12 +5,15 @@ import CardFavorites from '../../components/CardFavorites';
 import Header from '../../components/Header';
 
 function FavoriteRecipes() {
-  const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const [data, setData] = useState(JSON.parse(localStorage.getItem('favoriteRecipes')));
   const [share, setShare] = useState(true);
+  const [filter, setFilter] = useState('');
 
-  // const handleClick = () => {
-  //   alert('Link copied!');
-  // };
+  const handleClick = (favorites) => {
+    const local = (window.location.href).split('/');
+    clipBoard(`${local[0]}//${local[2]}/${favorites.type}s/${favorites.id}`);
+    setShare(false);
+  };
 
   return (
     <div>
@@ -19,26 +22,31 @@ function FavoriteRecipes() {
         <button
           type="button"
           data-testid="filter-by-all-btn"
+          onClick={ () => setFilter('') }
         >
           All
         </button>
         <button
           type="button"
           data-testid="filter-by-food-btn"
+          onClick={ () => setFilter('food') }
         >
           Food
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
+          onClick={ () => setFilter('drink') }
         >
           Drink
         </button>
       </section>
       {
-        data.map((favorites, index) => (
+        data.filter((type) => type.type.includes(filter)).map((favorites, index) => (
           <CardFavorites
+            change={ setData }
             key={ favorites.id }
+            id={ favorites.id }
             index={ index }
             img={ favorites.image }
             name={ favorites.name }
@@ -48,8 +56,7 @@ function FavoriteRecipes() {
             foods={ favorites.type }
             share={ share }
             onClick={ () => {
-              clipBoard(`http://localhost:3000/${favorites.type}s/${favorites.id}`);
-              setShare(false);
+              handleClick(favorites);
             } }
           />
         ))

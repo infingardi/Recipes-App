@@ -3,6 +3,10 @@ footer {
   position: fixed;
 }
 
+img {
+  max-width: 100%;
+}
+
 .carrocel-container {
   overflow: auto;
 }
