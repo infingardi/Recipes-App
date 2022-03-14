@@ -3,6 +3,14 @@ footer {
   position: fixed;
 }
 
+img {
+  max-width: 100%;
+}
+
+.carrocel-container {
+  overflow: auto;
+}
+
 .carrocel-container > div {
   display: flex;
   overflow: auto;
