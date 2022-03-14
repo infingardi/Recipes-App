@@ -4,17 +4,16 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useUpdateInProgress } from '../../hooks';
-import testando from '../../helper';
+import handleData from '../../helper';
 import { RemoveProgress, setInProgressRecipes } from '../../redux/actions';
 import './index.css';
 
 export default function InputCheck({ text, index }) {
   const { id } = useParams();
   const { pathname } = useLocation();
-  const test = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
-  const { name } = testando()[test];
+  const mealsOrDrinks = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
+  const { name } = handleData()[mealsOrDrinks];
   const { addCheck, removeCheck, storage } = useUpdateInProgress(name);
-  // console.log(storage[name]);
   const [isChecked, setIsChecked] = useState(storage[name][id].includes(text));
   const { inProgressRecipes } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -36,7 +35,6 @@ export default function InputCheck({ text, index }) {
     <label
       data-testid={ `${index}-ingredient-step` }
       htmlFor={ `${index}-ingredient-step` }
-      // className={ isChecked ? 'line' : null }
       style={
         isChecked ? { textDecoration: 'line-through' } : { textDecoration: 'none' }
       }
@@ -48,13 +46,11 @@ export default function InputCheck({ text, index }) {
         checked={ isChecked }
       />
       {text}
-      {/* <span>
-      </span> */}
     </label>
   );
 }
 
 InputCheck.propTypes = {
   text: PropTypes.string,
-  index: PropTypes.string,
+  index: PropTypes.number,
 }.isRequired;
