@@ -62,17 +62,14 @@ function Foods() {
           />
         ))
       }
-
       {data.slice(0, MAX_LENGTH).map((e, i) => (
         <Card
-          key={ e.idMeal }
+          key={ `${e.idMeal}${Math.random()}` }
           index={ i }
           type="recipe"
           src={ e.strMealThumb }
           titleCard={ e.strMeal }
-          // foods="foods"
           onClick={ () => history.push(`/foods/${e.idMeal}`) }
-          // id={ e.idMeal }
         />
       ))}
       <Footer />

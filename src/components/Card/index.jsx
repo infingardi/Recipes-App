@@ -6,7 +6,6 @@ export default function Card({ src, titleCard, index, type, onClick }) {
     <button
       type="button"
       data-testid={ `${index}-${type}-card` }
-      key={ index }
       onClick={ onClick }
       className="card-class"
     >
