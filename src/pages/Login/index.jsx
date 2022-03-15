@@ -9,7 +9,6 @@ export default function Index() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  console.log(history);
 
   const MIN_LENGTH = 7;
   const REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{3}$/;
