@@ -39,11 +39,11 @@ const rootReducer = (state = INITIAL_STATE, action) => {
     };
   case SET_MEALS_CATEGORIES:
     return {
-      ...state, mealsCategoryResponse: Object.values(action.payload).flat(),
+      ...state, mealsCategoryResponse: action.payload,
     };
   case SET_DRINKS_CATEGORIES:
     return {
-      ...state, drinksCategoryResponse: Object.values(action.payload).flat(),
+      ...state, drinksCategoryResponse: action.payload,
     };
   case ADD_FAVORITE_TYPE:
     return {

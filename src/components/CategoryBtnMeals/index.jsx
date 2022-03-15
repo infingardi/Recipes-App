@@ -16,6 +16,7 @@ export default function CategoryBtnMeals({ index, categoryName }) {
     } else {
       const response = await fetMeals();
       dispatch(setFoodAndDrinks(response));
+      setVerify(true);
     }
   };
 

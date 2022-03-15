@@ -32,12 +32,12 @@ export const setFoodAndDrinks = (newResponse) => ({
 
 export const setMealsCategory = (mealsCategoryResponse) => ({
   type: SET_MEALS_CATEGORIES,
-  payload: mealsCategoryResponse,
+  payload: mealsCategoryResponse.meals,
 });
 
 export const setDrinksCategory = (drinksCategoryResponse) => ({
   type: SET_DRINKS_CATEGORIES,
-  payload: drinksCategoryResponse,
+  payload: drinksCategoryResponse.drinks,
 });
 
 export const removeFavorites = (id) => ({
