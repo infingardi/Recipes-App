@@ -9,6 +9,7 @@ import { actionAddFavorite, removeFavorites,
 import { getDrink, getFood } from '../../services';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import './index.css';
 
 export default function FoodsDetails() {
   const { id } = useParams();
@@ -60,9 +61,10 @@ export default function FoodsDetails() {
       image: responseFoodAndDrinks[0].strMealThumb,
     };
     setIsFavorite(!isFavorite);
-    setIsFavorite(!isFavorite);
     if (isFavorite) {
       dispatch(removeFavorites(id));
+      localStorage.setItem('favoriteRecipes',
+        JSON.stringify(favoriteRecipes.filter((e) => e.id !== id)));
     } else {
       dispatch(actionAddFavorite(objFavorites));
       localStorage.setItem('favoriteRecipes',
@@ -75,39 +77,38 @@ export default function FoodsDetails() {
       <section>
         {responseFoodAndDrinks[0] && (
           <>
-            <section>
+            <section className="container-img">
               <img
                 data-testid="recipe-photo"
                 src={ responseFoodAndDrinks[0].strMealThumb }
                 alt=""
               />
               <div>
-                <h1 data-testid="recipe-title">{responseFoodAndDrinks[0].strMeal}</h1>
-                <h3
-                  data-testid="recipe-category"
-                >
-                  {responseFoodAndDrinks[0].strCategory}
-                </h3>
-              </div>
-              <div>
-                <button
-                  data-testid="share-btn"
-                  type="button"
-                  onClick={ copyLink }
-                >
-                  {share}
+                <div>
+                  <h1 data-testid="recipe-title">{responseFoodAndDrinks[0].strMeal}</h1>
+                  <h3
+                    data-testid="recipe-category"
+                  >
+                    {responseFoodAndDrinks[0].strCategory}
+                  </h3>
+                </div>
+                <div>
+                  <button
+                    data-testid="share-btn"
+                    type="button"
+                    onClick={ copyLink }
+                  >
+                    {share}
 
-                </button>
-                <button
-                  type="button"
-                  onClick={ setFavorite }
-                >
-                  <img
+                  </button>
+                  <input
+                    type="image"
                     data-testid="favorite-btn"
+                    onClick={ setFavorite }
                     src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                    alt=""
+                    alt="button favorite"
                   />
-                </button>
+                </div>
               </div>
             </section>
             <section>

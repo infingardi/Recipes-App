@@ -1,0 +1,9 @@
+.container-img img {
+  width: 100%;
+}
+
+.container-img > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}

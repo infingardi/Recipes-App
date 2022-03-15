@@ -26,6 +26,8 @@ export default function InProgress() {
   const dispatch = useDispatch();
   const ID_ENPOINT = 'lookup.php?i=';
 
+  console.log(responseFoodAndDrinks);
+
   const setFoodAndDrink = useCallback(async () => {
     dispatch(setFoodAndDrinks(await get(`${ID_ENPOINT}${id}`)));
   }, [dispatch, id, get]);

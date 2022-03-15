@@ -34,11 +34,15 @@ footer {
 }
 
 .card-class {
+  align-items: center;
   animation: test 1s forwards;
   background-color: #fe4d68;
   border: none;
   border-radius: 30px 10px 0;
   box-shadow: 0 0 4px #fe4d68d4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   max-width: 180px;
   overflow: hidden;
   padding: 0;

@@ -13,7 +13,7 @@ export default function CategoryAllMeals() {
 
   return (
     <button
-      style={ { background: 'rgb(255 235 235)' } }
+      className="btnCategory"
       type="button"
       data-testid="All-category-filter"
       onClick={ handleAll }

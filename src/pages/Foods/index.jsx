@@ -6,14 +6,13 @@ import Card from '../../components/Card';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CategoryBtnMeals from '../../components/CategoryBtnMeals';
-
 import { fetMeals, fetMealsCategories } from '../../services';
 import {
   setFoodAndDrinks,
   setMealsCategory,
   verifyExploreClick,
 } from '../../redux/actions';
-import CategoryAllMeals from '../../components/CategoryAllMeals';
+import './index.css';
 
 function Foods() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
@@ -53,30 +52,16 @@ function Foods() {
   return (
     <section>
       <Header title="Foods" search />
-      <section
-        style={ {
-          display: 'flex',
-          justifyContent: 'space-around',
-          background: 'rgb(48, 25, 25)',
-        } }
-      >
-        <CategoryAllMeals />
+      <section className="main-screen-container">
         {btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnMeals
             key={ index }
+            index={ index }
             categoryName={ category.strCategory }
           />
         ))}
       </section>
-      <section
-        style={ {
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          background: 'rgb(255 235 235)',
-          paddingBottom: '45px',
-        } }
-      >
+      <section className="cards-container">
         {data.slice(0, MAX_LENGTH).map((e, i) => (
           <Card
             key={ `${e.idMeal}${Math.random()}` }
