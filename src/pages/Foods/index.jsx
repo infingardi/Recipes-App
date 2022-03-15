@@ -53,25 +53,41 @@ function Foods() {
   return (
     <section>
       <Header title="Foods" search />
-      <CategoryAllMeals />
-      {
-        btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
+      <section
+        style={ {
+          display: 'flex',
+          justifyContent: 'space-around',
+          background: 'rgb(48, 25, 25)',
+        } }
+      >
+        <CategoryAllMeals />
+        {btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnMeals
             key={ index }
             categoryName={ category.strCategory }
           />
-        ))
-      }
-      {data.slice(0, MAX_LENGTH).map((e, i) => (
-        <Card
-          key={ `${e.idMeal}${Math.random()}` }
-          index={ i }
-          type="recipe"
-          src={ e.strMealThumb }
-          titleCard={ e.strMeal }
-          onClick={ () => history.push(`/foods/${e.idMeal}`) }
-        />
-      ))}
+        ))}
+      </section>
+      <section
+        style={ {
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          background: 'rgb(255 235 235)',
+          paddingBottom: '45px',
+        } }
+      >
+        {data.slice(0, MAX_LENGTH).map((e, i) => (
+          <Card
+            key={ `${e.idMeal}${Math.random()}` }
+            index={ i }
+            type="recipe"
+            src={ e.strMealThumb }
+            titleCard={ e.strMeal }
+            onClick={ () => history.push(`/foods/${e.idMeal}`) }
+          />
+        ))}
+      </section>
       <Footer />
     </section>
   );

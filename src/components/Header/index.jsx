@@ -11,27 +11,35 @@ function Header({ title, search }) {
 
   return (
     <header>
-      <RedirectButtonImg
-        dataTest="profile-top-btn"
-        iconImg={ profileIcon }
-        path="/profile"
-        iconAlt="profile"
-      />
+      <section
+        style={ {
+          alignItems: 'center',
+          background: '#fe4d68',
+          display: 'flex',
+          justifyContent: 'space-around',
+        } }
+      >
+        <RedirectButtonImg
+          dataTest="profile-top-btn"
+          iconImg={ profileIcon }
+          path="/profile"
+          iconAlt="profile"
+        />
 
-      <h1 data-testid="page-title">
-        { title }
-      </h1>
-
-      { search && (
-        <button
-          type="button"
-          onClick={ () => setIsSearching(!isSearching) }
-          data-testid="search-top-btn"
-          src={ searchIcon }
-        >
-          <img src={ searchIcon } alt="search" />
-        </button>)}
-
+        <h1 data-testid="page-title">
+          { title }
+        </h1>
+        { search && (
+          <button
+            type="button"
+            onClick={ () => setIsSearching(!isSearching) }
+            data-testid="search-top-btn"
+            src={ searchIcon }
+            style={ { background: 'none', border: 'none' } }
+          >
+            <img src={ searchIcon } alt="search" />
+          </button>)}
+      </section>
       { isSearching && <SearchBar /> }
     </header>
   );

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setFoodAndDrinks } from '../../redux/actions';
 import { fetAllMealsByCategory, fetMeals } from '../../services';
 
-export default function CategoryBtnMeals({ index, categoryName }) {
+export default function CategoryBtnMeals({ categoryName }) {
   const [verify, setVerify] = useState(true);
   const dispatch = useDispatch();
   const handleClick = async () => {
@@ -20,15 +20,14 @@ export default function CategoryBtnMeals({ index, categoryName }) {
   };
 
   return (
-    <section className="btn-category" key={ index }>
-      <button
-        type="button"
-        data-testid={ `${categoryName}-category-filter` }
-        onClick={ handleClick }
-      >
-        { categoryName }
-      </button>
-    </section>
+    <button
+      type="button"
+      data-testid={ `${categoryName}-category-filter` }
+      onClick={ handleClick }
+      style={ { flex: '1', background: 'rgb(255 235 235)' } }
+    >
+      { categoryName }
+    </button>
   );
 }
 

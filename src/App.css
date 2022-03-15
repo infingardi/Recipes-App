@@ -1,7 +1,18 @@
 footer {
+  background-color: #fe4d68;
   bottom: 0;
+  display: flex;
+  justify-content: space-around;
   position: fixed;
+  width: 100%;
 }
+
+/* header {
+  align-items: center;
+  background: #fe4d68;
+  display: flex;
+  justify-content: space-around;
+} */
 
 .img-favorites {
   max-width: 100%;
@@ -22,6 +33,29 @@ footer {
   width: 180px;
 }
 
+.card-class {
+  animation: test 1s forwards;
+  background-color: #fe4d68;
+  border: none;
+  border-radius: 30px 10px 0;
+  box-shadow: 0 0 4px #fe4d68d4;
+  max-width: 180px;
+  overflow: hidden;
+  padding: 0;
+  transform: scale(0.95);
+}
+
 .card-class img {
-  max-width: 340px;
+  width: 100%;
+}
+
+@keyframes test {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
