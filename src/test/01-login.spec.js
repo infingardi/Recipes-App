@@ -36,5 +36,5 @@ describe('testa a pagina de login', () => {
 
     userEvent.click(btn);
     expect(window.location.pathname).toBe('/foods');
-    });
   });
+});
