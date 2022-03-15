@@ -133,9 +133,13 @@ export default function FoodsDetails() {
             </section>
             <section>
               <h3>Video</h3>
+              { console.log() }
               <iframe
+                width="500px"
+                height="500px"
                 data-testid="video"
-                src={ responseFoodAndDrinks[0].strYoutube }
+                src={ responseFoodAndDrinks[0].strYoutube
+                  && responseFoodAndDrinks[0].strYoutube.replace('watch?v=', 'embed/') }
                 title={ responseFoodAndDrinks[0].strMeal }
                 frameBorder="0"
               />
@@ -175,6 +179,7 @@ export default function FoodsDetails() {
           data-testid="start-recipe-btn"
           type="button"
           style={ { position: 'fixed', bottom: '0' } }
+          onClick={ () => history.push(`${id}/in-progress`) }
         >
           Continue Recipe
         </button>
