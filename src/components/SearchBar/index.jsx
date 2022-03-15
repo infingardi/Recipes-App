@@ -58,7 +58,7 @@ function SearchBar() {
     >
       <label htmlFor="search-input">
         <input
-          style={ { width: '100%', textAlign: 'center' } }
+          style={ { width: '100%', textAlign: 'center', padding: '0' } }
           data-testid="search-input"
           id="search-input"
           placeholder="Search Recipe"
