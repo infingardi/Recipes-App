@@ -9,7 +9,6 @@ describe('testa a pagina de explore', () => {
   const DRINKS_DATATEST = 'explore-drinks';
   beforeEach(() => {
     renderWithRedux(<Explore />);
-    // window.localStorage.setItem('user', '{ "email": "email@email.coma" }');
   });
 
   test('Verifica se existem todos os datatests ', () => {
