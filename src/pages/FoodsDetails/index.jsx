@@ -92,14 +92,13 @@ export default function FoodsDetails() {
                     {responseFoodAndDrinks[0].strCategory}
                   </h3>
                 </div>
-                <div>
+                <div className="shareAndFavorite-btn">
                   <button
                     data-testid="share-btn"
                     type="button"
                     onClick={ copyLink }
                   >
                     {share}
-
                   </button>
                   <input
                     type="image"
@@ -111,20 +110,18 @@ export default function FoodsDetails() {
                 </div>
               </div>
             </section>
-            <section>
+            <section className="ingredients-container">
               <h3>Ingredients</h3>
               <ul>
                 {ingredientes.map((e, i) => (
                   <li key={ i } data-testid={ `${i}-ingredient-name-and-measure` }>
-                    {e[1]}
-                    {' '}
-                    {quantities[i][1]}
+                    {`- ${e[1]} ${quantities[i][1]}`}
                   </li>
                 ))}
 
               </ul>
             </section>
-            <section>
+            <section className="instructions-container">
               <h3>Instructions</h3>
               <p
                 data-testid="instructions"
@@ -132,9 +129,8 @@ export default function FoodsDetails() {
                 { responseFoodAndDrinks[0].strInstructions}
               </p>
             </section>
-            <section>
+            <section className="video-container">
               <h3>Video</h3>
-              { console.log() }
               <iframe
                 width="500px"
                 height="500px"
@@ -147,7 +143,6 @@ export default function FoodsDetails() {
             </section>
           </>
         )}
-        {/* Recommended */}
         <section className="carrocel-container">
           <h3>Recommended</h3>
           <div>
@@ -168,8 +163,8 @@ export default function FoodsDetails() {
       {!isDoneRecipe && (
         <button
           data-testid="start-recipe-btn"
+          className="continueAndStart-btn"
           type="button"
-          style={ { position: 'fixed', bottom: '0' } }
           onClick={ startRecipe }
         >
           Start recipe
@@ -179,7 +174,7 @@ export default function FoodsDetails() {
         <button
           data-testid="start-recipe-btn"
           type="button"
-          style={ { position: 'fixed', bottom: '0' } }
+          className="continueAndStart-btn"
           onClick={ () => history.push(`${id}/in-progress`) }
         >
           Continue Recipe

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { IoMdEyeOff, IoMdEye } from 'react-icons/io';
+
 import { actionLogin } from '../../redux/actions';
+import logo from '../../images/HowHungry.png';
+import background from '../../images/download.png';
+import './index.css';
 
 export default function Index() {
   const history = useHistory();
   const TOKEN = 1;
   const [email, setEmail] = useState('');
+  const [isViewPassword, setIsViewPassword] = useState(false);
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   console.log(history);
@@ -35,12 +41,18 @@ export default function Index() {
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={ (e) => e.preventDefault() }>
+    <div className="login-container">
+      <img
+        className="img-background"
+        src={ background }
+        alt=""
+      />
+      <img src={ logo } alt="logo" width="150px" />
+      <form onSubmit={ (e) => e.preventDefault() } className="form-login">
 
-        <label htmlFor="emailInput">
+        <label htmlFor="emailInput" className="label-form">
           <input
+            placeholder="Email"
             type="email"
             name="emailInput"
             id="email-input"
@@ -50,18 +62,23 @@ export default function Index() {
           />
         </label>
 
-        <label htmlFor="passwordInput">
+        <label htmlFor="passwordInput" className="label-form">
           <input
-            type="password"
+            placeholder="Password"
+            type={ isViewPassword ? 'text' : 'password' }
             name="passwordInput"
             id="password-input"
             data-testid="password-input"
             value={ password }
             onChange={ ({ target }) => setPassword(target.value) }
           />
+          <button type="button" onClick={ () => setIsViewPassword(!isViewPassword) }>
+            {isViewPassword ? <IoMdEye /> : <IoMdEyeOff /> }
+          </button>
         </label>
 
         <button
+          className="btn-login"
           type="submit"
           name="submitBTN"
           id="loggin-submit-btn"
@@ -71,7 +88,6 @@ export default function Index() {
         >
           Enter
         </button>
-
       </form>
     </div>
   );

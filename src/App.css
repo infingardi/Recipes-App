@@ -1,10 +1,18 @@
 footer {
+  align-items: center;
   background-color: #fe4d68;
   bottom: 0;
+  box-sizing: border-box;
   display: flex;
+  height: 50px;
   justify-content: space-around;
   position: fixed;
   width: 100%;
+}
+
+footer > a {
+  height: 40px;
+  width: 40px;
 }
 
 /* header {
@@ -20,17 +28,28 @@ footer {
 
 .carrocel-container {
   overflow: auto;
+  padding: 0 10px 80px;
 }
+
+/* .carrocel-container h3 {
+  padding: 0 10px;
+} */
 
 .carrocel-container > div {
   display: flex;
+  gap: 3px;
   overflow: auto;
   width: 100%;
 }
 
+.carrocel-container > div > div {
+  background-color: #fe4d68;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+}
+
 .carrocel-container img {
-  transform: scale(0.95);
-  width: 180px;
+  width: 170px;
 }
 
 .card-class {
@@ -38,14 +57,14 @@ footer {
   animation: test 1s forwards;
   background-color: #fe4d68;
   border: none;
-  border-radius: 30px 10px 0;
-  box-shadow: 0 0 4px #fe4d68d4;
+  border-radius: 10px;
+  box-shadow: 0 5px 0 #d5d5d5d4;
   display: flex;
   flex-direction: column;
+  height: fit-content;
   justify-content: flex-start;
   max-width: 180px;
   overflow: hidden;
-  padding: 0;
   transform: scale(0.95);
 }
 

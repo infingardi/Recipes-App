@@ -68,48 +68,46 @@ export default function DrinkDetails() {
         JSON.stringify([...favoriteRecipes, objFavorites]));
     }
   }
-  // console.log(responseFoodAndDrinks[0]);
   return (
     <div>
       <section>
         {responseFoodAndDrinks[0] && (
           <>
-            <section>
+            <section className="container-img">
               <img
                 data-testid="recipe-photo"
                 src={ responseFoodAndDrinks[0].strDrinkThumb }
                 alt=""
               />
               <div>
-                <h1 data-testid="recipe-title">{responseFoodAndDrinks[0].strDrink}</h1>
-                <h3
-                  data-testid="recipe-category"
-                >
-                  {responseFoodAndDrinks[0].strAlcoholic}
-                </h3>
-              </div>
-              <div>
-                <button
-                  data-testid="share-btn"
-                  type="button"
-                  onClick={ copyLink }
-                >
-                  {share}
+                <div>
+                  <h1 data-testid="recipe-title">{responseFoodAndDrinks[0].strDrink}</h1>
+                  <h3
+                    data-testid="recipe-category"
+                  >
+                    {responseFoodAndDrinks[0].strAlcoholic}
+                  </h3>
+                </div>
+                <div className="shareAndFavorite-btn">
+                  <button
+                    data-testid="share-btn"
+                    type="button"
+                    onClick={ copyLink }
+                  >
+                    {share}
 
-                </button>
-                <button
-                  type="button"
-                  onClick={ setFavorite }
-                >
-                  <img
+                  </button>
+                  <input
+                    alt="button favorite"
+                    type="image"
                     data-testid="favorite-btn"
+                    onClick={ setFavorite }
                     src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                    alt=""
                   />
-                </button>
+                </div>
               </div>
             </section>
-            <section>
+            <section className="ingredients-container">
               <h3>Ingredients</h3>
               <ul>
                 {ingredientes.map((e, i) => (
@@ -122,7 +120,7 @@ export default function DrinkDetails() {
 
               </ul>
             </section>
-            <section>
+            <section className="instructions-container">
               <h3>Instructions</h3>
               <p
                 data-testid="instructions"
@@ -132,7 +130,6 @@ export default function DrinkDetails() {
             </section>
           </>
         )}
-        {/* Recommended */}
         <section className="carrocel-container">
           <h3>Recommended</h3>
           <div>
@@ -150,8 +147,8 @@ export default function DrinkDetails() {
       {!isDoneRecipe && (
         <button
           data-testid="start-recipe-btn"
+          className="continueAndStart-btn"
           type="button"
-          style={ { position: 'fixed', bottom: '0' } }
           onClick={ startRecipe }
         >
           Start recipe
@@ -160,8 +157,9 @@ export default function DrinkDetails() {
       {isProgress && (
         <button
           data-testid="start-recipe-btn"
+          className="continueAndStart-btn"
           type="button"
-          style={ { position: 'fixed', bottom: '0' } }
+          onClick={ () => history.push(`${id}/in-progress`) }
         >
           Continue Recipe
         </button>

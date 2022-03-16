@@ -1,0 +1,9 @@
+.redirectBtn {
+  background-color: rgb(255 235 235);
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 3px 0 black;
+  flex: 1;
+  font-size: 20px;
+  padding: 5px;
+  transform: scale(0.98);
+}

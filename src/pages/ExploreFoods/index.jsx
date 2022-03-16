@@ -20,7 +20,7 @@ function ExploreFoods() {
   return (
     <div>
       <Header title="Explore Foods" />
-      <main>
+      <main style={ { display: 'flex' } }>
         <RedirectButton
           dataTest="explore-by-ingredient"
           titleBtn="By Ingredient"

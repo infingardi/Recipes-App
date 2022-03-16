@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 
+import { useHistory } from 'react-router-dom';
+import { CgLogOut } from 'react-icons/cg';
 import SearchBar from '../SearchBar';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import RedirectButtonImg from '../RedirectButtonImg';
+import './index.css';
 
 function Header({ title, search }) {
   const [isSearching, setIsSearching] = useState(false);
+  const history = useHistory();
+
+  const handleClick = () => {
+    localStorage.clear();
+    history.push('/');
+  };
 
   return (
     <header>
-      <section
-        style={ {
-          alignItems: 'center',
-          background: '#fe4d68',
-          display: 'flex',
-          justifyContent: 'space-around',
-        } }
-      >
+      <section className="header">
         <RedirectButtonImg
           dataTest="profile-top-btn"
           iconImg={ profileIcon }
@@ -29,7 +31,7 @@ function Header({ title, search }) {
         <h1 data-testid="page-title">
           { title }
         </h1>
-        { search && (
+        { search ? (
           <button
             type="button"
             onClick={ () => setIsSearching(!isSearching) }
@@ -38,7 +40,21 @@ function Header({ title, search }) {
             style={ { background: 'none', border: 'none' } }
           >
             <img src={ searchIcon } alt="search" />
-          </button>)}
+          </button>)
+          : (
+            <button
+              type="button"
+              data-testid="profile-logout-btn"
+              onClick={ handleClick }
+              style={ {
+                all: 'unset',
+                fontSize: '30px',
+                display: 'flex',
+              } }
+            >
+              <CgLogOut />
+            </button>
+          )}
       </section>
       { isSearching && <SearchBar /> }
     </header>

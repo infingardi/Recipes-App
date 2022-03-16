@@ -66,54 +66,57 @@ export default function InProgress() {
       <section>
         {responseFoodAndDrinks[0] && (
           <>
-            <section>
+            <section className="container-img">
               <img
                 data-testid="recipe-photo"
                 src={ responseFoodAndDrinks[0][strThumb] }
                 alt=""
               />
               <div>
-                <h1 data-testid="recipe-title">{responseFoodAndDrinks[0][strTitle]}</h1>
-                <h3
-                  data-testid="recipe-category"
-                >
-                  {responseFoodAndDrinks[0][strCategory]}
-                </h3>
-              </div>
-              <div>
-                <button
-                  data-testid="share-btn"
-                  type="button"
-                  onClick={ copyLink }
-                >
-                  {share}
+                <div>
+                  <h1 data-testid="recipe-title">{responseFoodAndDrinks[0][strTitle]}</h1>
+                  <h3
+                    data-testid="recipe-category"
+                  >
+                    {responseFoodAndDrinks[0][strCategory]}
+                  </h3>
+                </div>
+                <div className="shareAndFavorite-btn">
+                  <button
+                    data-testid="share-btn"
+                    type="button"
+                    onClick={ copyLink }
+                  >
+                    {share}
 
-                </button>
-                <button
-                  type="button"
-                  onClick={ setFavorite }
-                >
-                  <img
+                  </button>
+                  <input
+                    type="image"
                     data-testid="favorite-btn"
+                    onClick={ setFavorite }
+                    alt="finish recipe"
                     src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                    alt=""
                   />
-                </button>
+                </div>
               </div>
             </section>
-            <section>
+            <section className="ingredients-container">
               <h3>Ingredients</h3>
-              <div>
+              <ul>
                 {ingredientes.map((e, i) => (
-                  <InputCheck
-                    key={ i }
-                    text={ `${e[1]} ${quantities[i][1]}` }
-                    index={ i }
-                  />
+                  <li key={ i }>
+                    <InputCheck
+                      text={ `${e[1]} ${quantities[i][1]}` }
+                      index={ i }
+                    />
+                  </li>
                 ))}
-              </div>
+              </ul>
             </section>
-            <section>
+            <section
+              className="instructions-container"
+              style={ { marginBottom: '60px' } }
+            >
               <h3>Instructions</h3>
               <p
                 data-testid="instructions"
@@ -125,6 +128,7 @@ export default function InProgress() {
         )}
         <button
           type="button"
+          className="continueAndStart-btn"
           data-testid="finish-recipe-btn"
           disabled={ storage[name][id]
             ? storage[name][id].length !== ingredientes.length : null }
