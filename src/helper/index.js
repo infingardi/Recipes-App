@@ -2,6 +2,7 @@ import { getDrink, getFood } from '../services';
 
 export default (response = [{}]) => ({
   meals: {
+    id: response[0].idMeal,
     name: 'meals',
     rota: `/foods/${response[0].idMeal}`,
     strThumb: 'strMealThumb',
@@ -9,6 +10,8 @@ export default (response = [{}]) => ({
     strCategory: 'strCategory',
     strInstructions: 'strInstructions',
     get: getFood,
+    tags: response[0].strTags?.includes(',') ? response[0].strTags?.split(', ')
+      : [response[0].strTags],
     objFavorites: {
       id: response[0].idMeal,
       type: 'food',
@@ -20,6 +23,7 @@ export default (response = [{}]) => ({
     },
   },
   drinks: {
+    id: response[0].idDrink,
     name: 'cocktails',
     rota: `/drinks/${response[0].idDrink}`,
     strThumb: 'strDrinkThumb',
@@ -27,6 +31,7 @@ export default (response = [{}]) => ({
     strCategory: 'strAlcoholic',
     strInstructions: 'strInstructions',
     get: getDrink,
+    tags: [],
     objFavorites: {
       id: response[0].idDrink,
       type: 'drink',

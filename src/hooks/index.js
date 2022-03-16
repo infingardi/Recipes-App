@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { actionAddDone, removeInProgressRecipe } from '../redux/actions';
 
 export function useIngretientes(data) {
   const [ingredientes, setIngredientes] = useState([]);
@@ -41,4 +43,23 @@ export function useUpdateInProgress(destiny) {
     }));
   }
   return { addCheck, removeCheck, newProgress, storage };
+}
+// outro push
+
+export function useUpdateDoneRecipe() {
+  const dispatch = useDispatch();
+  const allDoneRecipes = useSelector(({ doneRecipes }) => doneRecipes);
+  const allRecipesInProgress = useSelector(({ inProgressRecipes }) => inProgressRecipes);
+
+  function addDoneRecipe(doneRecipe) {
+    delete allRecipesInProgress[doneRecipe.destiny][doneRecipe.id];
+
+    dispatch(actionAddDone(doneRecipe));
+    dispatch(removeInProgressRecipe(allRecipesInProgress));
+
+    localStorage.setItem('doneRecipes', JSON.stringify([...allDoneRecipes, doneRecipe]));
+    localStorage.setItem('inProgressRecipes', JSON.stringify(allRecipesInProgress));
+  }
+
+  return { addDoneRecipe };
 }

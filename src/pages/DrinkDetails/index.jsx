@@ -5,7 +5,7 @@ import clipBoard from 'clipboard-copy';
 
 import { useIngretientes, useUpdateInProgress } from '../../hooks';
 import { actionAddFavorite, removeFavorites,
-  setFoodAndDrinks, actionAddDone, setInProgressRecipes } from '../../redux/actions';
+  setFoodAndDrinks, setInProgressRecipes } from '../../redux/actions';
 import { getDrink, getFood } from '../../services';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
@@ -37,7 +37,7 @@ export default function DrinkDetails() {
   }, [setDrink]);
 
   function startRecipe() {
-    dispatch(actionAddDone(responseFoodAndDrinks[0]));
+    // dispatch(actionAddDone(responseFoodAndDrinks[0]));
     dispatch(setInProgressRecipes('drinks', { [id]: [] }));
     newProgress();
 
