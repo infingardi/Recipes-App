@@ -81,6 +81,7 @@ function ExploreFoodsByNationality() {
         <section>
           <label htmlFor="nationality">
             <select
+              style={ { width: '100%', backgroundColor: 'rgb(255 235 235)' } }
               name="nationality"
               id="nationality"
               data-testid="explore-by-nationality-dropdown"
@@ -91,7 +92,12 @@ function ExploreFoodsByNationality() {
           </label>
         </section>
 
-        <section>
+        <section
+          style={ {
+            display: 'flex',
+            flexWrap: 'wrap',
+          } }
+        >
           {renderAllMealsByNationality()}
         </section>
 

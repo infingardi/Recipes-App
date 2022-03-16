@@ -12,7 +12,6 @@ import {
   setDrinksCategory,
   verifyExploreClick,
 } from '../../redux/actions';
-import CategoryAllDrinks from '../../components/CategoryAllDrinks';
 
 function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
@@ -54,25 +53,27 @@ function Drinks() {
   return (
     <section>
       <Header title="Drinks" search />
-      <CategoryAllDrinks />
-      {
-        btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
+      <section className="main-screen-container">
+        {btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnDrinks
             key={ index }
+            index={ index }
             categoryName={ category.strCategory }
           />
-        ))
-      }
-      {data.slice(0, MAX_LENGTH).map((e, i) => (
-        <Card
-          key={ e.idDrink }
-          index={ i }
-          type="recipe"
-          src={ e.strDrinkThumb }
-          titleCard={ e.strDrink }
-          onClick={ () => history.push(`/drinks/${e.idDrink}`) }
-        />
-      ))}
+        ))}
+      </section>
+      <section className="cards-container">
+        {data.slice(0, MAX_LENGTH).map((e, i) => (
+          <Card
+            key={ e.idDrink }
+            index={ i }
+            type="recipe"
+            src={ e.strDrinkThumb }
+            titleCard={ e.strDrink }
+            onClick={ () => history.push(`/drinks/${e.idDrink}`) }
+          />
+        ))}
+      </section>
       <Footer />
     </section>
   );

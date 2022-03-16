@@ -1,0 +1,17 @@
+.main-screen-container {
+  background: rgb(48, 25, 25);
+  display: flex;
+  gap: 1px;
+  height: 30px;
+  justify-content: space-around;
+}
+
+.cards-container {
+  align-content: flex-start;
+  background: rgb(255 235 235);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 100vh;
+  padding-bottom: 45px;
+}

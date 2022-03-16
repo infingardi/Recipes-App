@@ -9,6 +9,7 @@ import { actionAddFavorite, removeFavorites,
 import { getDrink, getFood } from '../../services';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import './index.css';
 
 export default function FoodsDetails() {
   const { id } = useParams();
@@ -60,9 +61,10 @@ export default function FoodsDetails() {
       image: responseFoodAndDrinks[0].strMealThumb,
     };
     setIsFavorite(!isFavorite);
-    setIsFavorite(!isFavorite);
     if (isFavorite) {
       dispatch(removeFavorites(id));
+      localStorage.setItem('favoriteRecipes',
+        JSON.stringify(favoriteRecipes.filter((e) => e.id !== id)));
     } else {
       dispatch(actionAddFavorite(objFavorites));
       localStorage.setItem('favoriteRecipes',
@@ -75,55 +77,51 @@ export default function FoodsDetails() {
       <section>
         {responseFoodAndDrinks[0] && (
           <>
-            <section>
+            <section className="container-img">
               <img
                 data-testid="recipe-photo"
                 src={ responseFoodAndDrinks[0].strMealThumb }
                 alt=""
               />
               <div>
-                <h1 data-testid="recipe-title">{responseFoodAndDrinks[0].strMeal}</h1>
-                <h3
-                  data-testid="recipe-category"
-                >
-                  {responseFoodAndDrinks[0].strCategory}
-                </h3>
-              </div>
-              <div>
-                <button
-                  data-testid="share-btn"
-                  type="button"
-                  onClick={ copyLink }
-                >
-                  {share}
-
-                </button>
-                <button
-                  type="button"
-                  onClick={ setFavorite }
-                >
-                  <img
+                <div>
+                  <h1 data-testid="recipe-title">{responseFoodAndDrinks[0].strMeal}</h1>
+                  <h3
+                    data-testid="recipe-category"
+                  >
+                    {responseFoodAndDrinks[0].strCategory}
+                  </h3>
+                </div>
+                <div className="shareAndFavorite-btn">
+                  <button
+                    data-testid="share-btn"
+                    type="button"
+                    onClick={ copyLink }
+                  >
+                    {share}
+                  </button>
+                  <input
+                    type="image"
                     data-testid="favorite-btn"
+                    onClick={ setFavorite }
                     src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                    alt=""
+                    alt="button favorite"
                   />
-                </button>
+                </div>
               </div>
             </section>
-            <section>
+            <section className="ingredients-container">
               <h3>Ingredients</h3>
               <ul>
                 {ingredientes.map((e, i) => (
                   <li key={ i } data-testid={ `${i}-ingredient-name-and-measure` }>
-                    {e[1]}
-                    {' '}
-                    {quantities[i][1]}
+                    {`- ${e[1]} ${quantities[i][1]}`}
                   </li>
                 ))}
 
               </ul>
             </section>
-            <section>
+            <section className="instructions-container">
               <h3>Instructions</h3>
               <p
                 data-testid="instructions"
@@ -131,9 +129,8 @@ export default function FoodsDetails() {
                 { responseFoodAndDrinks[0].strInstructions}
               </p>
             </section>
-            <section>
+            <section className="video-container">
               <h3>Video</h3>
-              { console.log() }
               <iframe
                 width="500px"
                 height="500px"
@@ -146,7 +143,6 @@ export default function FoodsDetails() {
             </section>
           </>
         )}
-        {/* Recommended */}
         <section className="carrocel-container">
           <h3>Recommended</h3>
           <div>
@@ -167,8 +163,8 @@ export default function FoodsDetails() {
       {!isDoneRecipe && (
         <button
           data-testid="start-recipe-btn"
+          className="continueAndStart-btn"
           type="button"
-          style={ { position: 'fixed', bottom: '0' } }
           onClick={ startRecipe }
         >
           Start recipe
@@ -178,7 +174,7 @@ export default function FoodsDetails() {
         <button
           data-testid="start-recipe-btn"
           type="button"
-          style={ { position: 'fixed', bottom: '0' } }
+          className="continueAndStart-btn"
           onClick={ () => history.push(`${id}/in-progress`) }
         >
           Continue Recipe
