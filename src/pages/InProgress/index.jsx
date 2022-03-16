@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import clipBoard from 'clipboard-copy';
 
-import { useIngretientes, useUpdateInProgress } from '../../hooks';
+import { useIngretientes, useUpdateInProgress, useUpdateDoneRecipe } from '../../hooks';
 import { actionAddFavorite, removeFavorites, setFoodAndDrinks,
   setInProgressRecipes } from '../../redux/actions';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
@@ -18,9 +18,10 @@ export default function InProgress() {
   const mealsOrDrinks = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
   const { responseFoodAndDrinks, favoriteRecipes } = useSelector((state) => state);
   const { get, name, strCategory, objFavorites, rota, strThumb,
-    strInstructions, strTitle } = handleData(responseFoodAndDrinks)[mealsOrDrinks];
+    strInstructions, strTitle, tags } = handleData(responseFoodAndDrinks)[mealsOrDrinks];
   const [share, setShare] = useState('share');
   const { newProgress, storage } = useUpdateInProgress(name);
+  const { addDoneRecipe } = useUpdateDoneRecipe();
   const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
   const [isFavorite, setIsFavorite] = useState(favoriteRecipes.some((e) => e.id === id));
   const dispatch = useDispatch();
@@ -57,6 +58,28 @@ export default function InProgress() {
       localStorage.setItem('favoriteRecipes',
         JSON.stringify([...favoriteRecipes, objFavorites]));
     }
+  }
+
+  function handleFinishRecipe() {
+    const { type, nationality, category, alcoholicOrNot, image } = objFavorites;
+    const doneDate = new Date().toLocaleDateString();
+
+    const recipeObj = {
+      id: objFavorites.id,
+      type,
+      nationality,
+      category,
+      alcoholicOrNot,
+      name: objFavorites.name,
+      image,
+      doneDate,
+      tags,
+      destiny: name,
+    };
+
+    addDoneRecipe(recipeObj);
+
+    history.push('/done-recipes');
   }
 
   return (
@@ -126,7 +149,7 @@ export default function InProgress() {
           data-testid="finish-recipe-btn"
           disabled={ storage[name][id]
             ? storage[name][id].length !== ingredientes.length : null }
-          onClick={ () => history.push('/done-recipes') }
+          onClick={ () => handleFinishRecipe() }
         >
           Finish Recipe
         </button>

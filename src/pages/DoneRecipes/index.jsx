@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import CardDoneRecipes from '../../components/CardDoneRecipes';
 
 import Header from '../../components/Header';
 
 function DoneRecipes() {
+  const done = useSelector(({ doneRecipes }) => doneRecipes);
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    const doneRecipesData = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    setDoneRecipes(doneRecipesData);
+    setDoneRecipes(done);
   }, []);
 
   return (

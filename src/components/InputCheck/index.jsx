@@ -23,7 +23,7 @@ export default function InputCheck({ text, index }) {
     setIsChecked((old) => !old);
     if (checked) {
       addCheck(parentElement.innerText);
-      dispatch(setInProgressRecipes(name, newCheck));
+      dispatch(setInProgressRecipes(name, newCheck, id));
     } else {
       removeCheck(parentElement.innerText);
       dispatch(RemoveProgress(name, { [id]: inProgressRecipes[name][id]

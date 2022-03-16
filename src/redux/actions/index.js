@@ -9,6 +9,7 @@ export const REMOVE_FAVORITE_TYPE = 'REMOVE_FAVORITE';
 export const ADD_PROGRESS_RECIPES_TYPE = 'ADD_PROGRESS_RECIPES';
 export const VERIFY_EXPLORE_CLICK = 'VERIFY_EXPLORE_CLICK';
 export const REMOVE_PROGRESS_RECIPES_TYPE = 'REMOVE_PROGRESS_RECIPES';
+export const REMOVE_IN_PROGRESS_RECIPE_TYPE = 'REMOVE_IN_PROGRESS_RECIPE';
 
 export const actionLogin = (newEmail) => ({
   type: ADD_LOGIN_TYPE,
@@ -45,8 +46,20 @@ export const removeFavorites = (id) => ({
   payload: id,
 });
 
-export const setInProgressRecipes = (destiny, newProgress) => ({
+export const setInProgressRecipes = (destiny, newProgress, id) => ({
   type: ADD_PROGRESS_RECIPES_TYPE,
+  payload: newProgress,
+  destiny,
+  id,
+});
+
+export const removeInProgressRecipe = (newProgress) => ({
+  type: REMOVE_IN_PROGRESS_RECIPE_TYPE,
+  payload: newProgress,
+});
+
+export const RemoveProgress = (destiny, newProgress) => ({
+  type: REMOVE_PROGRESS_RECIPES_TYPE,
   payload: newProgress,
   destiny,
 });
@@ -57,9 +70,3 @@ export function verifyExploreClick(isClickedInExplore) {
     payload: isClickedInExplore,
   };
 }
-
-export const RemoveProgress = (destiny, newProgress) => ({
-  type: REMOVE_PROGRESS_RECIPES_TYPE,
-  payload: newProgress,
-  destiny,
-});
