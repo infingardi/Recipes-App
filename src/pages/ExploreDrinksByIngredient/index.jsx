@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import Footer from '../../components/Footer';
 import Card from '../../components/Card';
 import Header from '../../components/Header';
-import { fetIngredientsDrinks, getDrink } from '../../services';
+import { getDrink, LIST_ALL_INGREDIENTS_DRINKS } from '../../services';
 import { setFoodAndDrinks, verifyExploreClick } from '../../redux/actions';
 
 function ExploreDrinksByIngredient() {
@@ -15,7 +15,7 @@ function ExploreDrinksByIngredient() {
   const MAX_LENGTH = 12;
 
   const getIngredientDrinks = useCallback(async () => {
-    const response = await fetIngredientsDrinks();
+    const response = await getDrink(LIST_ALL_INGREDIENTS_DRINKS);
     setData(response.drinks);
   }, []);
 

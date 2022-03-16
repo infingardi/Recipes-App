@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import Footer from '../../components/Footer';
 import Card from '../../components/Card';
 import Header from '../../components/Header';
-import { fetIngredientsMeals, getFood } from '../../services';
+import { getFood, LIST_ALL_INGREDIENTS_MEAL } from '../../services';
 import { setFoodAndDrinks, verifyExploreClick } from '../../redux/actions';
 
 function ExploreFoodsByIngredient() {
@@ -15,7 +15,7 @@ function ExploreFoodsByIngredient() {
   const MAX_LENGTH = 12;
 
   const getIngredientMeals = useCallback(async () => {
-    const response = await fetIngredientsMeals();
+    const response = await getFood(LIST_ALL_INGREDIENTS_MEAL);
     setData(response.meals);
   }, []);
 
@@ -34,17 +34,15 @@ function ExploreFoodsByIngredient() {
   return (
     <div>
       <Header title="Explore Ingredients" />
-      {data.slice(0, MAX_LENGTH).map((e, i) => {
-        console.log(e);
-        return (<Card
+      {data.slice(0, MAX_LENGTH).map((e, i) => (
+        <Card
           key={ e.idIngredient }
           index={ i }
           type="ingredient"
           src={ `https://www.themealdb.com/images/ingredients/${e.strIngredient}-Small.png` }
           titleCard={ e.strIngredient }
           onClick={ () => handleClick(e.strIngredient) }
-        />);
-      })}
+        />))}
       <Footer />
     </div>
   );

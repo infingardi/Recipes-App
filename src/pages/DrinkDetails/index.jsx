@@ -68,7 +68,7 @@ export default function DrinkDetails() {
         JSON.stringify([...favoriteRecipes, objFavorites]));
     }
   }
-  // console.log(responseFoodAndDrinks[0]);
+
   return (
     <div>
       <section>

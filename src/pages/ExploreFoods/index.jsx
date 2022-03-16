@@ -4,12 +4,12 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import RedirectButton from '../../components/RedirectButton';
 
-import { fetSurpriseMeMeals } from '../../services';
+import { getFood, SURPRISE_ME_MEAL } from '../../services';
 
 function ExploreFoods() {
   const [id, setId] = useState('0');
   const getRandomMeal = useCallback(async () => {
-    const response = await fetSurpriseMeMeals();
+    const response = await getFood(SURPRISE_ME_MEAL);
     setId(response.meals[0].idMeal);
   }, []);
 

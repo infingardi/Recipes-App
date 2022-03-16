@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import { setFoodAndDrinks } from '../../redux/actions';
-import { fetAllMealsByCategory, fetMeals } from '../../services';
+import { getFood, BASE_MEALS_BY_CATEGORY, BASE_MEALS } from '../../services';
 
 export default function CategoryBtnMeals({ index, categoryName }) {
   const [verify, setVerify] = useState(true);
   const dispatch = useDispatch();
   const handleClick = async () => {
     if (verify) {
-      const data = await fetAllMealsByCategory(categoryName);
+      const data = await getFood(`${BASE_MEALS_BY_CATEGORY}${categoryName}`);
       dispatch(setFoodAndDrinks(data));
       setVerify(false);
     } else {
-      const response = await fetMeals();
+      const response = await getFood(BASE_MEALS);
       dispatch(setFoodAndDrinks(response));
       setVerify(true);
     }
