@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import clipBoard from 'clipboard-copy';
 
+import { ID_ENPOINT } from '../../services';
 import { useIngretientes, useUpdateInProgress, useUpdateDoneRecipe } from '../../hooks';
 import { actionAddFavorite, removeFavorites, setFoodAndDrinks,
   setInProgressRecipes } from '../../redux/actions';
@@ -25,9 +26,6 @@ export default function InProgress() {
   const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
   const [isFavorite, setIsFavorite] = useState(favoriteRecipes.some((e) => e.id === id));
   const dispatch = useDispatch();
-  const ID_ENPOINT = 'lookup.php?i=';
-
-  console.log(responseFoodAndDrinks);
 
   const setFoodAndDrink = useCallback(async () => {
     dispatch(setFoodAndDrinks(await get(`${ID_ENPOINT}${id}`)));

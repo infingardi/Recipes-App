@@ -20,7 +20,6 @@ export default function CardFavorites({
 }) {
   const removeFavorite = (key) => {
     const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    console.log('aqui');
     const filter = data.filter((favorite) => favorite.id !== key);
     localStorage.setItem('favoriteRecipes', JSON.stringify(filter));
     change(filter);

@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { useDispatch } from 'react-redux';
-import { fetDrinks } from '../../services';
+import { getDrink, SEARCH_ENDPOINT } from '../../services';
 import { setFoodAndDrinks } from '../../redux/actions';
 
 export default function CategoryAllDrinks() {
   const dispatch = useDispatch();
   const handleAll = async () => {
-    const response = await fetDrinks();
+    const response = await getDrink(SEARCH_ENDPOINT);
     dispatch(setFoodAndDrinks(response));
   };
 

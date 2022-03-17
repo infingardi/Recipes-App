@@ -6,7 +6,7 @@ import clipBoard from 'clipboard-copy';
 import { useIngretientes, useUpdateInProgress } from '../../hooks';
 import { actionAddFavorite, removeFavorites,
   setFoodAndDrinks, setInProgressRecipes } from '../../redux/actions';
-import { getDrink, getFood } from '../../services';
+import { getDrink, getFood, SEARCH_ENDPOINT, ID_ENPOINT } from '../../services';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import './index.css';
@@ -22,7 +22,6 @@ export default function FoodsDetails() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
-  const ID_ENPOINT = 'lookup.php?i=';
   const MAX_LENGH_RECOMMENDED = 6;
   const isDoneRecipe = doneRecipes.some((e) => e.idMeal === id)
   || doneRecipes.some((e) => e.id === id);
@@ -30,7 +29,7 @@ export default function FoodsDetails() {
 
   const setFood = useCallback(async () => {
     dispatch(setFoodAndDrinks(await getFood(`${ID_ENPOINT}${id}`)));
-    setRecommended(await getDrink('search.php?s='));
+    setRecommended(await getDrink(SEARCH_ENDPOINT));
   }, [dispatch, id]);
 
   useEffect(() => {
