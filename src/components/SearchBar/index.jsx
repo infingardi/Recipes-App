@@ -50,9 +50,15 @@ function SearchBar() {
   };
 
   return (
-    <form>
+    <form
+      style={ {
+        display: 'flex',
+        flexDirection: 'column',
+      } }
+    >
       <label htmlFor="search-input">
         <input
+          style={ { width: '100%', textAlign: 'center', padding: '0' } }
           data-testid="search-input"
           id="search-input"
           placeholder="Search Recipe"
@@ -60,7 +66,12 @@ function SearchBar() {
         />
       </label>
 
-      <div>
+      <div
+        style={ {
+          display: 'flex',
+          justifyContent: 'space-around',
+        } }
+      >
         <label htmlFor="ingredient-search-radio">
           <input
             type="radio"
@@ -93,15 +104,15 @@ function SearchBar() {
           />
           First Letter
         </label>
-
-        <button
-          data-testid="exec-search-btn"
-          type="submit"
-          onClick={ (event) => { handleSubmitButton(event); } }
-        >
-          Search
-        </button>
       </div>
+      <button
+        style={ { background: '#fe4d68d4' } }
+        data-testid="exec-search-btn"
+        type="submit"
+        onClick={ (event) => { handleSubmitButton(event); } }
+      >
+        Search
+      </button>
     </form>
   );
 }

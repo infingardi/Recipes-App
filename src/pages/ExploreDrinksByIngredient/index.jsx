@@ -34,16 +34,18 @@ function ExploreDrinksByIngredient() {
   return (
     <div>
       <Header title="Explore Ingredients" />
-      {data.slice(0, MAX_LENGTH).map((e, i) => (
-        <Card
-          key={ e.strIngredient1 }
-          index={ i }
-          type="ingredient"
-          src={ `https://www.thecocktaildb.com/images/ingredients/${e.strIngredient1}-Small.png` }
-          titleCard={ e.strIngredient1 }
-          onClick={ () => handleClick(e.strIngredient1) }
-        />
-      ))}
+      <section className="cards-container">
+        {data.slice(0, MAX_LENGTH).map((e, i) => (
+          <Card
+            key={ e.strIngredient1 }
+            index={ i }
+            type="ingredient"
+            src={ `https://www.thecocktaildb.com/images/ingredients/${e.strIngredient1}-Small.png` }
+            titleCard={ e.strIngredient1 }
+            onClick={ () => handleClick(e.strIngredient1) }
+          />
+        ))}
+      </section>
       <Footer />
     </div>
   );

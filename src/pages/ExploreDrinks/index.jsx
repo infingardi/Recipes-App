@@ -18,7 +18,7 @@ function ExploreDrinks() {
   return (
     <div>
       <Header title="Explore Drinks" />
-      <main>
+      <main style={ { display: 'flex' } }>
         <RedirectButton
           dataTest="explore-by-ingredient"
           titleBtn="By Ingredient"

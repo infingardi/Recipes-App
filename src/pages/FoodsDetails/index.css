@@ -1,0 +1,53 @@
+.container-img img {
+  width: 100%;
+}
+
+.container-img > div {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.container-img > div h3 {
+  color: rgb(171, 171, 171);
+}
+
+.shareAndFavorite-btn {
+  display: flex;
+  gap: 20px;
+}
+
+.shareAndFavorite-btn button {
+  background: none;
+  border: solid 1px;
+  font-size: 20px;
+  padding: 3px 10px;
+}
+
+.ingredients-container, .instructions-container, .video-container {
+  padding: 0 10px;
+}
+
+.ingredients-container ul, .instructions-container p {
+  background-color: rgb(255 235 235);
+}
+
+.video-container iframe {
+  height: 200px;
+  width: 100%;
+}
+
+.continueAndStart-btn {
+  background-color: #fe4d68;
+  bottom: 0;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+}
+
+.continueAndStart-btn:disabled {
+  background-color: rgb(165, 165, 165);
+}

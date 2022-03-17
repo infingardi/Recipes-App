@@ -13,6 +13,7 @@ export default function CategoryAllMeals() {
 
   return (
     <button
+      className="btnCategory"
       type="button"
       data-testid="All-category-filter"
       onClick={ handleAll }

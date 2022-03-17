@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { fetAllDrinksByCategory, fetDrinks } from '../../services';
 import { setFoodAndDrinks } from '../../redux/actions';
+import CategoryAllDrinks from '../CategoryAllDrinks';
 
 export default function CategoryBtnDrinks({ index, categoryName }) {
   const [verify, setVerify] = useState(true);
@@ -21,15 +22,20 @@ export default function CategoryBtnDrinks({ index, categoryName }) {
   };
 
   return (
-    <section className="btn-category" key={ index }>
+    <>
+      {index === 0 && (
+        <CategoryAllDrinks />
+      )}
       <button
+        className="btnCategory"
         type="button"
         data-testid={ `${categoryName}-category-filter` }
         onClick={ handleClick }
+        style={ { flex: `${index === 0 ? '1.8' : 1}` } }
       >
         { categoryName }
       </button>
-    </section>
+    </>
   );
 }
 

@@ -34,17 +34,17 @@ function ExploreFoodsByIngredient() {
   return (
     <div>
       <Header title="Explore Ingredients" />
-      {data.slice(0, MAX_LENGTH).map((e, i) => {
-        console.log(e);
-        return (<Card
-          key={ e.idIngredient }
-          index={ i }
-          type="ingredient"
-          src={ `https://www.themealdb.com/images/ingredients/${e.strIngredient}-Small.png` }
-          titleCard={ e.strIngredient }
-          onClick={ () => handleClick(e.strIngredient) }
-        />);
-      })}
+      <section className="cards-container">
+        {data.slice(0, MAX_LENGTH).map((e, i) => (
+          <Card
+            key={ e.idIngredient }
+            index={ i }
+            type="ingredient"
+            src={ `https://www.themealdb.com/images/ingredients/${e.strIngredient}-Small.png` }
+            titleCard={ e.strIngredient }
+            onClick={ () => handleClick(e.strIngredient) }
+          />))}
+      </section>
       <Footer />
     </div>
   );
