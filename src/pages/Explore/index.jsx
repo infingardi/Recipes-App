@@ -8,7 +8,7 @@ function Explore() {
   return (
     <div>
       <Header title="Explore" />
-      <main>
+      <main style={ { display: 'flex', justifyContent: 'space-around' } }>
         <RedirectButton
           dataTest="explore-foods"
           titleBtn="Explore Foods"

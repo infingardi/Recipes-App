@@ -6,14 +6,13 @@ import Card from '../../components/Card';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CategoryBtnMeals from '../../components/CategoryBtnMeals';
-
-import { getFood, BASE_MEALS, BASE_MEALS_CATEGORY } from '../../services';
+import { getFood, SEARCH_ENDPOINT, ENDPOINT_LIST_CATEGORIES } from '../../services';
 import {
   setFoodAndDrinks,
   setMealsCategory,
   verifyExploreClick,
 } from '../../redux/actions';
-import CategoryAllMeals from '../../components/CategoryAllMeals';
+import './index.css';
 
 function Foods() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
@@ -27,7 +26,7 @@ function Foods() {
   const dispatch = useDispatch();
 
   const getMeals = useCallback(async () => {
-    const response = await getFood(BASE_MEALS);
+    const response = await getFood(SEARCH_ENDPOINT);
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
@@ -42,7 +41,7 @@ function Foods() {
   useEffect(verifyRedirect, [dispatch, getMeals]);
 
   const getCategoryMeals = useCallback(async () => {
-    const response = await getFood(BASE_MEALS_CATEGORY);
+    const response = await getFood(ENDPOINT_LIST_CATEGORIES);
     dispatch(setMealsCategory(response));
   }, [dispatch]);
 
@@ -53,25 +52,27 @@ function Foods() {
   return (
     <section>
       <Header title="Foods" search />
-      <CategoryAllMeals />
-      {
-        btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
+      <section className="main-screen-container">
+        {btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnMeals
             key={ index }
+            index={ index }
             categoryName={ category.strCategory }
           />
-        ))
-      }
-      {data.slice(0, MAX_LENGTH).map((e, i) => (
-        <Card
-          key={ `${e.idMeal}${Math.random()}` }
-          index={ i }
-          type="recipe"
-          src={ e.strMealThumb }
-          titleCard={ e.strMeal }
-          onClick={ () => history.push(`/foods/${e.idMeal}`) }
-        />
-      ))}
+        ))}
+      </section>
+      <section className="cards-container">
+        {data.slice(0, MAX_LENGTH).map((e, i) => (
+          <Card
+            key={ `${e.idMeal}${Math.random()}` }
+            index={ i }
+            type="recipe"
+            src={ e.strMealThumb }
+            titleCard={ e.strMeal }
+            onClick={ () => history.push(`/foods/${e.idMeal}`) }
+          />
+        ))}
+      </section>
       <Footer />
     </section>
   );

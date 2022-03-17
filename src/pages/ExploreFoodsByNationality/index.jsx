@@ -4,7 +4,12 @@ import { useHistory } from 'react-router-dom';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
-import { getFood } from '../../services';
+import {
+  getFood,
+  ENDPOINT_LIST_ALL_NATIONALITIES,
+  SEARCH_ENDPOINT,
+  ENDPOINT_BY_NATIONALITY,
+} from '../../services';
 
 function ExploreFoodsByNationality() {
   const MAX_LENGTH = 12;
@@ -14,18 +19,18 @@ function ExploreFoodsByNationality() {
   const history = useHistory();
 
   const getAllNatiolaities = async () => {
-    const { meals } = await getFood('list.php?a=list');
+    const { meals } = await getFood(ENDPOINT_LIST_ALL_NATIONALITIES);
 
     setAllNationalities(meals);
   };
 
   const getAllMealsByNationality = useCallback(async () => {
     if (selectedNationality === 'All') {
-      const { meals } = await getFood('search.php?s=');
+      const { meals } = await getFood(SEARCH_ENDPOINT);
       setAllMealsByNationality(meals);
       return;
     }
-    const { meals } = await getFood(`filter.php?a=${selectedNationality}`);
+    const { meals } = await getFood(`${ENDPOINT_BY_NATIONALITY}${selectedNationality}`);
 
     setAllMealsByNationality(meals);
   }, [selectedNationality]);
@@ -81,6 +86,7 @@ function ExploreFoodsByNationality() {
         <section>
           <label htmlFor="nationality">
             <select
+              style={ { width: '100%', backgroundColor: 'rgb(255 235 235)' } }
               name="nationality"
               id="nationality"
               data-testid="explore-by-nationality-dropdown"
@@ -91,7 +97,12 @@ function ExploreFoodsByNationality() {
           </label>
         </section>
 
-        <section>
+        <section
+          style={ {
+            display: 'flex',
+            flexWrap: 'wrap',
+          } }
+        >
           {renderAllMealsByNationality()}
         </section>
 

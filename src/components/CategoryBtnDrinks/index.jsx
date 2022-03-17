@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
-import { getDrink, BASE_DRINKS_BY_CATEGORY, BASE_DRINKS } from '../../services';
+import { getDrink, ENDPOINT_BY_CATEGORY, SEARCH_ENDPOINT } from '../../services';
 import { setFoodAndDrinks } from '../../redux/actions';
+import CategoryAllDrinks from '../CategoryAllDrinks';
 
 export default function CategoryBtnDrinks({ index, categoryName }) {
   const [verify, setVerify] = useState(true);
@@ -11,26 +12,30 @@ export default function CategoryBtnDrinks({ index, categoryName }) {
 
   const handleClick = async () => {
     if (verify) {
-      // const data = await fetAllDrinksByCategory(categoryName);
-      const data = await getDrink(`${BASE_DRINKS_BY_CATEGORY}${categoryName}`);
+      const data = await getDrink(`${ENDPOINT_BY_CATEGORY}${categoryName}`);
       dispatch(setFoodAndDrinks(data));
       setVerify(false);
     } else {
-      const response = await getDrink(BASE_DRINKS);
+      const response = await getDrink(SEARCH_ENDPOINT);
       dispatch(setFoodAndDrinks(response));
     }
   };
 
   return (
-    <section className="btn-category" key={ index }>
+    <>
+      {index === 0 && (
+        <CategoryAllDrinks />
+      )}
       <button
+        className="btnCategory"
         type="button"
         data-testid={ `${categoryName}-category-filter` }
         onClick={ handleClick }
+        style={ { flex: `${index === 0 ? '1.8' : 1}` } }
       >
         { categoryName }
       </button>
-    </section>
+    </>
   );
 }
 

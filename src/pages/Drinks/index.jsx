@@ -6,13 +6,12 @@ import Header from '../../components/Header';
 import Card from '../../components/Card';
 import Footer from '../../components/Footer';
 import CategoryBtnDrinks from '../../components/CategoryBtnDrinks';
-import { getDrink, BASE_DRINKS, BASE_DRINKS_CATEGORY } from '../../services';
+import { getDrink, SEARCH_ENDPOINT, ENDPOINT_LIST_CATEGORIES } from '../../services';
 import {
   setFoodAndDrinks,
   setDrinksCategory,
   verifyExploreClick,
 } from '../../redux/actions';
-import CategoryAllDrinks from '../../components/CategoryAllDrinks';
 
 function Drinks() {
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
@@ -29,7 +28,7 @@ function Drinks() {
 
   const getDrinks = useCallback(async () => {
     // const response = await fetDrinks();
-    const response = await getDrink(BASE_DRINKS);
+    const response = await getDrink(SEARCH_ENDPOINT);
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
@@ -43,7 +42,7 @@ function Drinks() {
 
   useEffect(verifyRedirect, [dispatch, getDrinks]);
   const getCategoryDrinks = useCallback(async () => {
-    const response = await getDrink(BASE_DRINKS_CATEGORY);
+    const response = await getDrink(ENDPOINT_LIST_CATEGORIES);
 
     dispatch(setDrinksCategory(response));
   }, [dispatch]);
@@ -55,25 +54,27 @@ function Drinks() {
   return (
     <section>
       <Header title="Drinks" search />
-      <CategoryAllDrinks />
-      {
-        btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
+      <section className="main-screen-container">
+        {btnCategories.slice(0, MAX_LENGTH_CATEGORIES).map((category, index) => (
           <CategoryBtnDrinks
             key={ index }
+            index={ index }
             categoryName={ category.strCategory }
           />
-        ))
-      }
-      {data.slice(0, MAX_LENGTH).map((e, i) => (
-        <Card
-          key={ e.idDrink }
-          index={ i }
-          type="recipe"
-          src={ e.strDrinkThumb }
-          titleCard={ e.strDrink }
-          onClick={ () => history.push(`/drinks/${e.idDrink}`) }
-        />
-      ))}
+        ))}
+      </section>
+      <section className="cards-container">
+        {data.slice(0, MAX_LENGTH).map((e, i) => (
+          <Card
+            key={ e.idDrink }
+            index={ i }
+            type="recipe"
+            src={ e.strDrinkThumb }
+            titleCard={ e.strDrink }
+            onClick={ () => history.push(`/drinks/${e.idDrink}`) }
+          />
+        ))}
+      </section>
       <Footer />
     </section>
   );
