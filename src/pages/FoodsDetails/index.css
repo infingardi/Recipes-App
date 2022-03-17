@@ -47,3 +47,7 @@
   position: fixed;
   width: 100%;
 }
+
+.continueAndStart-btn:disabled {
+  background-color: rgb(165, 165, 165);
+}
