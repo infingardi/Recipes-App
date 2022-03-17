@@ -38,7 +38,7 @@ export default function DrinkDetails() {
 
   function startRecipe() {
     // dispatch(actionAddDone(responseFoodAndDrinks[0]));
-    dispatch(setInProgressRecipes('drinks', { [id]: [] }));
+    dispatch(setInProgressRecipes('cocktails', { [id]: [] }));
     newProgress();
 
     history.push(`${id}/in-progress`);
