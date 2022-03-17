@@ -51,8 +51,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       doneRecipes: [...state.doneRecipes, { ...action.payload, id: action.payload.id }],
     };
   case ADD_PROGRESS_RECIPES_TYPE:
-    console.log(action);
-    console.log(state.inProgressRecipes);
     return { ...state,
       inProgressRecipes: { ...state.inProgressRecipes,
         [action.destiny]: {

@@ -5,7 +5,11 @@ import { useDispatch } from 'react-redux';
 import Footer from '../../components/Footer';
 import Card from '../../components/Card';
 import Header from '../../components/Header';
-import { fetIngredientsDrinks, getDrink } from '../../services';
+import {
+  getDrink,
+  ENDPOINT_LIST_ALL_INGREDIENTS,
+  ENDPOINT_BY_INGREDIENT,
+} from '../../services';
 import { setFoodAndDrinks, verifyExploreClick } from '../../redux/actions';
 
 function ExploreDrinksByIngredient() {
@@ -15,12 +19,12 @@ function ExploreDrinksByIngredient() {
   const MAX_LENGTH = 12;
 
   const getIngredientDrinks = useCallback(async () => {
-    const response = await fetIngredientsDrinks();
+    const response = await getDrink(ENDPOINT_LIST_ALL_INGREDIENTS);
     setData(response.drinks);
   }, []);
 
   const handleClick = async (ingredient) => {
-    const allDrinks = await getDrink(`filter.php?i=${ingredient}`);
+    const allDrinks = await getDrink(`${ENDPOINT_BY_INGREDIENT}${ingredient}`);
     dispatch(setFoodAndDrinks(allDrinks));
     dispatch(verifyExploreClick(true));
 

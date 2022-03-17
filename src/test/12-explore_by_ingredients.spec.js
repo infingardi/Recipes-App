@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+// import userEvent from '@testing-library/user-event';
 import renderWithRedux from './renderWithRouter';
 import ExploreFoodsByIngredient from '../pages/ExploreFoodsByIngredient';
 import ExploreDrinksByIngredient from '../pages/ExploreDrinksByIngredient';

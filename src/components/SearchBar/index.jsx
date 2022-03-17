@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setFoodAndDrinks } from '../../redux/actions';
 
-import { fetchFoodsOrDrinks } from '../../services';
+import {
+  fetchFoodsOrDrinks,
+  ENDPOINT_BY_INGREDIENT,
+  SEARCH_ENDPOINT,
+  ENDPOINT_BY_FIRST_LETTER,
+} from '../../services';
 
 function SearchBar() {
   const history = useHistory();
@@ -26,13 +31,6 @@ function SearchBar() {
       global.alert('Your search must have only 1 (one) character');
       return;
     }
-
-    // let data;
-    // if (arrayPathname === 'foods') {
-    //   data = await getFood(reqPath);
-    // } else if (arrayPathname === 'drinks') {
-    //   data = await getDrink(reqPath);
-    // }
 
     fetchFoodsOrDrinks[arrayPathname](reqPath).then((response) => {
       const verifyResponseOne = Object.values(response).flat();
@@ -78,7 +76,7 @@ function SearchBar() {
             name="search-radio"
             data-testid="ingredient-search-radio"
             id="ingredient-search-radio"
-            onClick={ () => { option.current = 'filter.php?i='; } }
+            onClick={ () => { option.current = ENDPOINT_BY_INGREDIENT; } }
           />
           Ingredient
         </label>
@@ -89,7 +87,7 @@ function SearchBar() {
             name="search-radio"
             data-testid="name-search-radio"
             id="name-search-radio"
-            onClick={ () => { option.current = 'search.php?s='; } }
+            onClick={ () => { option.current = SEARCH_ENDPOINT; } }
           />
           Name
         </label>
@@ -100,7 +98,7 @@ function SearchBar() {
             name="search-radio"
             data-testid="first-letter-search-radio"
             id="first-letter-search-radio"
-            onClick={ () => { option.current = 'search.php?f='; } }
+            onClick={ () => { option.current = ENDPOINT_BY_FIRST_LETTER; } }
           />
           First Letter
         </label>

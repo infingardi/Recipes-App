@@ -3,12 +3,12 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import RedirectButton from '../../components/RedirectButton';
-import { fetSurpriseMeDrinks } from '../../services';
+import { getDrink, ENDPOINT_SURPRISE_ME } from '../../services';
 
 function ExploreDrinks() {
   const [id, setId] = useState('0');
   const getRandomDrink = useCallback(async () => {
-    const response = await fetSurpriseMeDrinks();
+    const response = await getDrink(ENDPOINT_SURPRISE_ME);
     setId(response.drinks[0].idDrink);
   }, []);
 

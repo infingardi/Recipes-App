@@ -6,7 +6,7 @@ import Card from '../../components/Card';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CategoryBtnMeals from '../../components/CategoryBtnMeals';
-import { fetMeals, fetMealsCategories } from '../../services';
+import { getFood, SEARCH_ENDPOINT, ENDPOINT_LIST_CATEGORIES } from '../../services';
 import {
   setFoodAndDrinks,
   setMealsCategory,
@@ -26,7 +26,7 @@ function Foods() {
   const dispatch = useDispatch();
 
   const getMeals = useCallback(async () => {
-    const response = await fetMeals();
+    const response = await getFood(SEARCH_ENDPOINT);
     dispatch(setFoodAndDrinks(response));
   }, [dispatch]);
 
@@ -41,7 +41,7 @@ function Foods() {
   useEffect(verifyRedirect, [dispatch, getMeals]);
 
   const getCategoryMeals = useCallback(async () => {
-    const response = await fetMealsCategories();
+    const response = await getFood(ENDPOINT_LIST_CATEGORIES);
     dispatch(setMealsCategory(response));
   }, [dispatch]);
 
