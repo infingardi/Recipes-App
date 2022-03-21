@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { IoMdEyeOff, IoMdEye } from 'react-icons/io';
@@ -40,12 +40,16 @@ function Register() {
     });
 
     if (error) {
-      alert('Usuario já existente');
+      global.alert('Usuario já existente');
       return;
     }
 
     history.push('/foods');
   }
+
+  useEffect(() => {
+    localStorage.clear();
+  });
 
   return (
     <div className="login-container">

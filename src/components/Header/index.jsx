@@ -18,7 +18,7 @@ function Header({ title, search }) {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
-      alert('Falha ao tentar deslogar');
+      global.alert('Falha ao tentar deslogar');
       return;
     }
 

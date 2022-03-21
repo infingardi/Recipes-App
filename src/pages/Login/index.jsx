@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { IoMdEyeOff, IoMdEye } from 'react-icons/io';
 
@@ -41,12 +41,16 @@ export default function Index() {
     handleLogin(email);
 
     if (error) {
-      alert('Email ou senha incorretos');
+      global.alert('Email ou senha incorretos');
       return;
     }
 
     history.push('/foods');
   }
+
+  useEffect(() => {
+    localStorage.clear();
+  });
 
   return (
     <div className="login-container">
