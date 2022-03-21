@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import { useSelector } from 'react-redux';
+import { useUpdateFavoriteRecipe } from '../../hooks';
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
@@ -18,11 +20,16 @@ export default function CardFavorites({
   onClick,
   share,
 }) {
-  const removeFavorite = (key) => {
-    const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const filter = data.filter((favorite) => favorite.id !== key);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(filter));
-    change(filter);
+  const { removeFavoriteRecipe } = useUpdateFavoriteRecipe();
+  const allFavoriteRecipes = useSelector(({ favoriteRecipes }) => favoriteRecipes);
+
+  const removeFavorite = async () => {
+    await removeFavoriteRecipe(id);
+    const data = allFavoriteRecipes.filter((e) => e.id !== id);
+    change(data);
+    // const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    // const filter = data.filter((favorite) => favorite.id !== key);
+    // localStorage.setItem('favoriteRecipes', JSON.stringify(filter));
   };
 
   return (
@@ -61,7 +68,7 @@ export default function CardFavorites({
       </button>
       <button
         type="button"
-        onClick={ () => removeFavorite(id) }
+        onClick={ removeFavorite }
       >
         <img
           src={ blackHeartIcon }

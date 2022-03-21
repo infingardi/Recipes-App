@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
+import { useLogin } from '../../hooks';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import RedirectButton from '../../components/RedirectButton';
@@ -7,6 +8,8 @@ import RedirectButton from '../../components/RedirectButton';
 import { getFood, ENDPOINT_SURPRISE_ME } from '../../services';
 
 function ExploreFoods() {
+  const { verifyLogin } = useLogin();
+
   const [id, setId] = useState('0');
   const getRandomMeal = useCallback(async () => {
     const response = await getFood(ENDPOINT_SURPRISE_ME);
@@ -14,6 +17,7 @@ function ExploreFoods() {
   }, []);
 
   useEffect(() => {
+    verifyLogin();
     getRandomMeal();
   }, [getRandomMeal]);
 

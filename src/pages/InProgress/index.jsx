@@ -3,9 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import clipBoard from 'clipboard-copy';
 
+import { useLogin,
+  useIngretientes,
+  useUpdateInProgress,
+  useUpdateDoneRecipe,
+  useUpdateFavoriteRecipe,
+} from '../../hooks';
 import { ID_ENPOINT } from '../../services';
-import { useIngretientes, useUpdateInProgress, useUpdateDoneRecipe } from '../../hooks';
-import { actionAddFavorite, removeFavorites, setFoodAndDrinks,
+import { setFoodAndDrinks,
   setInProgressRecipes } from '../../redux/actions';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
@@ -15,23 +20,30 @@ import handleData from '../../helper';
 export default function InProgress() {
   const { id } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
+
   const mealsOrDrinks = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
   const { responseFoodAndDrinks, favoriteRecipes } = useSelector((state) => state);
+
   const { get, name, strCategory, objFavorites, rota, strThumb,
     strInstructions, strTitle, tags } = handleData(responseFoodAndDrinks)[mealsOrDrinks];
-  const [share, setShare] = useState('share');
-  const { newProgress, storage } = useUpdateInProgress(name);
+
+  const { verifyLogin } = useLogin();
   const { addDoneRecipe } = useUpdateDoneRecipe();
+  const { newProgress, storage } = useUpdateInProgress(name);
+  const { addFavoriteRecipe, removeFavoriteRecipe } = useUpdateFavoriteRecipe();
+
   const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
+  const [share, setShare] = useState('share');
   const [isFavorite, setIsFavorite] = useState(favoriteRecipes.some((e) => e.id === id));
-  const dispatch = useDispatch();
 
   const setFoodAndDrink = useCallback(async () => {
     dispatch(setFoodAndDrinks(await get(`${ID_ENPOINT}${id}`)));
   }, [dispatch, id, get]);
 
   useEffect(() => {
+    verifyLogin();
     setFoodAndDrink();
   }, [setFoodAndDrink]);
 
@@ -47,16 +59,13 @@ export default function InProgress() {
     setShare('Link copied!');
   }
 
-  function setFavorite() {
+  async function setFavorite() {
     setIsFavorite(!isFavorite);
+
     if (isFavorite) {
-      dispatch(removeFavorites(id));
-      localStorage.setItem('favoriteRecipes',
-        JSON.stringify(favoriteRecipes.filter((f) => f.id !== id)));
+      await removeFavoriteRecipe(id);
     } else {
-      dispatch(actionAddFavorite(objFavorites));
-      localStorage.setItem('favoriteRecipes',
-        JSON.stringify([...favoriteRecipes, objFavorites]));
+      await addFavoriteRecipe(objFavorites);
     }
   }
 

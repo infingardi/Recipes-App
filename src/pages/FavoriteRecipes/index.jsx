@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clipBoard from 'clipboard-copy';
-import CardFavorites from '../../components/CardFavorites';
 
+import { useLogin } from '../../hooks';
+import CardFavorites from '../../components/CardFavorites';
 import Header from '../../components/Header';
 
 function FavoriteRecipes() {
+  const { verifyLogin } = useLogin();
+
   const [data, setData] = useState(JSON.parse(localStorage.getItem('favoriteRecipes')));
   const [share, setShare] = useState(true);
   const [filter, setFilter] = useState('');
@@ -14,6 +17,10 @@ function FavoriteRecipes() {
     clipBoard(`${local[0]}//${local[2]}/${favorites.type}s/${favorites.id}`);
     setShare(false);
   };
+
+  useEffect(() => {
+    verifyLogin();
+  }, []);
 
   return (
     <div>

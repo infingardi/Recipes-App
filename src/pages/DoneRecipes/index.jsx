@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import CardDoneRecipes from '../../components/CardDoneRecipes';
 
+import { useLogin } from '../../hooks';
+import CardDoneRecipes from '../../components/CardDoneRecipes';
 import Header from '../../components/Header';
 
 function DoneRecipes() {
+  const { verifyLogin } = useLogin();
+
   const done = useSelector(({ doneRecipes }) => doneRecipes);
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
+    verifyLogin();
     setDoneRecipes(done);
   }, []);
 

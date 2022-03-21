@@ -1,47 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+// import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { IoMdEyeOff, IoMdEye } from 'react-icons/io';
 
 import supabase from '../../supabase';
-import { useLogin } from '../../hooks';
+// import { actionLogin } from '../../redux/actions';
 import logo from '../../images/HowHungry.png';
 import background from '../../images/download.png';
 import './index.css';
 
-export default function Index() {
-  const MIN_LENGTH = 7;
-  const REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{3}$/;
+function Register() {
+  // const TOKEN = 1;
   const history = useHistory();
+  // const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isViewPassword, setIsViewPassword] = useState(false);
 
-  const { handleLogin } = useLogin();
+  const MIN_LENGTH = 7;
+  const REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{3}$/;
 
-  const teste = () => {
+  const verifyInputs = () => {
     const emailTest = !(REGEX.test(email));
     const passwordtest = password.length < MIN_LENGTH;
-    if (emailTest === false && passwordtest === false) {
-      return (
-        false
-      );
-    }
-    return (
-      true
-    );
+    const confirmPasswordtest = password !== confirmPassword;
+
+    const verify = !emailTest && !passwordtest && !confirmPasswordtest;
+
+    return !verify;
   };
 
-  async function loginUser() {
-    const { error } = await supabase.auth.signIn({
+  async function registerUser(e) {
+    e.preventDefault();
+    const { error } = await supabase.auth.signUp({
       email,
       password,
     });
 
-    handleLogin(email);
-
     if (error) {
-      global.alert('Email ou senha incorretos');
+      global.alert('Usuario já existente');
       return;
     }
 
@@ -57,7 +56,7 @@ export default function Index() {
       <img
         className="img-background"
         src={ background }
-        alt=""
+        alt="logo"
       />
       <img src={ logo } alt="logo" width="150px" />
       <form onSubmit={ (e) => e.preventDefault() } className="form-login">
@@ -89,25 +88,29 @@ export default function Index() {
           </button>
         </label>
 
+        <label htmlFor="confirmPasswordInput" className="label-form">
+          <input
+            placeholder="Confirm Password"
+            type={ isViewPassword ? 'text' : 'password' }
+            name="confirmPasswordInput"
+            id="confirm-password-input"
+            data-testid="confirm-password-input"
+            value={ confirmPassword }
+            onChange={ ({ target }) => setConfirmPassword(target.value) }
+          />
+          <button type="button" onClick={ () => setIsViewPassword(!isViewPassword) }>
+            {isViewPassword ? <IoMdEye /> : <IoMdEyeOff /> }
+          </button>
+        </label>
+
         <button
           className="btn-login"
           type="submit"
           name="submitBTN"
           id="loggin-submit-btn"
           data-testid="login-submit-btn"
-          disabled={ teste() }
-          onClick={ loginUser }
-        >
-          Enter
-        </button>
-
-        <button
-          className="btn-login"
-          type="button"
-          name="registerBTN"
-          id="register-submit-btn"
-          data-testid="register-submit-btn"
-          onClick={ () => history.push('/register') }
+          disabled={ verifyInputs() }
+          onClick={ (e) => registerUser(e) }
         >
           Register
         </button>
@@ -115,3 +118,5 @@ export default function Index() {
     </div>
   );
 }
+
+export default Register;

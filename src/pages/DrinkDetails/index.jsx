@@ -3,25 +3,42 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import clipBoard from 'clipboard-copy';
 
-import { useIngretientes, useUpdateInProgress } from '../../hooks';
-import { actionAddFavorite, removeFavorites,
-  setFoodAndDrinks, setInProgressRecipes } from '../../redux/actions';
+import { useLogin,
+  useIngretientes,
+  useUpdateInProgress,
+  useUpdateFavoriteRecipe,
+} from '../../hooks';
+
+import {
+  setFoodAndDrinks,
+  setInProgressRecipes,
+} from '../../redux/actions';
 import { getDrink, getFood, SEARCH_ENDPOINT, ID_ENPOINT } from '../../services';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 export default function DrinkDetails() {
+  const MAX_LENGH_RECOMMENDED = 6;
   const { id } = useParams();
-  const { newProgress } = useUpdateInProgress('cocktails');
-  const [recommended, setRecommended] = useState([]);
-  const [share, setShare] = useState('share');
-  const { responseFoodAndDrinks, favoriteRecipes,
-    doneRecipes, inProgressRecipes } = useSelector((state) => state);
-  const [isFavorite, setIsFavorite] = useState(favoriteRecipes.some((e) => e.id === id));
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const { verifyLogin } = useLogin();
+  const { newProgress } = useUpdateInProgress('cocktails');
+  const { addFavoriteRecipe, removeFavoriteRecipe } = useUpdateFavoriteRecipe();
+
+  const {
+    responseFoodAndDrinks,
+    favoriteRecipes,
+    doneRecipes,
+    inProgressRecipes,
+  } = useSelector((state) => state);
+
   const [ingredientes, quantities] = useIngretientes(responseFoodAndDrinks[0]);
-  const MAX_LENGH_RECOMMENDED = 6;
+  const [recommended, setRecommended] = useState([]);
+  const [share, setShare] = useState('share');
+  const [isFavorite, setIsFavorite] = useState(favoriteRecipes.some((e) => e.id === id));
+
   const isDoneRecipe = doneRecipes.some((e) => e.idDrink === id)
   || doneRecipes.some((e) => e.id === id);
   const isProgress = inProgressRecipes.cocktails[id];
@@ -32,6 +49,7 @@ export default function DrinkDetails() {
   }, [dispatch, id]);
 
   useEffect(() => {
+    verifyLogin();
     setDrink();
   }, [setDrink]);
 
@@ -48,7 +66,7 @@ export default function DrinkDetails() {
     setShare('Link copied!');
   }
 
-  function setFavorite() {
+  async function setFavorite() {
     const objFavorites = {
       id,
       type: 'drink',
@@ -59,12 +77,18 @@ export default function DrinkDetails() {
       image: responseFoodAndDrinks[0].strDrinkThumb,
     };
     setIsFavorite(!isFavorite);
+    // if (isFavorite) {
+    //   dispatch(removeFavorites(id));
+    // } else {
+    //   dispatch(actionAddFavorite(objFavorites));
+    //   localStorage.setItem('favoriteRecipes',
+    //     JSON.stringify([...favoriteRecipes, objFavorites]));
+    // }
+
     if (isFavorite) {
-      dispatch(removeFavorites(id));
+      await removeFavoriteRecipe(id);
     } else {
-      dispatch(actionAddFavorite(objFavorites));
-      localStorage.setItem('favoriteRecipes',
-        JSON.stringify([...favoriteRecipes, objFavorites]));
+      await addFavoriteRecipe(objFavorites);
     }
   }
 
