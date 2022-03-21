@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { useLogin } from '../../hooks';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
 import Footer from '../../components/Footer';
@@ -14,17 +15,18 @@ import {
 } from '../../redux/actions';
 
 function Drinks() {
+  const MAX_LENGTH = 12;
+  const MAX_LENGTH_CATEGORIES = 5;
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const { verifyLogin } = useLogin();
   const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
   const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
   const verifyRef = useRef(verify);
-  const history = useHistory();
   const btnCategories = useSelector(
     ({ drinksCategoryResponse }) => drinksCategoryResponse,
   );
-  const MAX_LENGTH = 12;
-  const MAX_LENGTH_CATEGORIES = 5;
-
-  const dispatch = useDispatch();
 
   const getDrinks = useCallback(async () => {
     // const response = await fetDrinks();
@@ -48,6 +50,7 @@ function Drinks() {
   }, [dispatch]);
 
   useEffect(() => {
+    verifyLogin();
     getCategoryDrinks();
   }, [getCategoryDrinks]);
 

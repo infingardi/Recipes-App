@@ -11,27 +11,18 @@ import {
   REMOVE_PROGRESS_RECIPES_TYPE,
   REMOVE_IN_PROGRESS_RECIPE_TYPE,
 } from '../actions';
-
-const INITIAL_STATE = {
-  user: { email: '' },
-  mealsToken: 1,
-  responseFoodAndDrinks: [{}],
-  cocktailsToken: 1,
-  doneRecipes: JSON.parse(localStorage.getItem('doneRecipes')) || [],
-  favoriteRecipes: JSON.parse(localStorage.getItem('favoriteRecipes')) || [],
-  inProgressRecipes: JSON.parse(localStorage.getItem('inProgressRecipes'))
-  || { meals: {}, cocktails: {} },
-  selectedMealIngredient: '',
-  selectedDrinkIngredient: '',
-  mealsCategoryResponse: [],
-  drinksCategoryResponse: [],
-  isClickedInExplore: false,
-};
+import INITIAL_STATE from './INITIAL_STATE';
 
 const rootReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_LOGIN_TYPE:
-    return { ...state, user: { email: action.payload } };
+    return {
+      ...state,
+      user: { email: action.payload.email },
+      doneRecipes: action.payload.doneRecipes,
+      favoriteRecipes: action.payload.favoriteRecipes,
+      inProgressRecipes: action.payload.inProgressRecipes,
+    };
   case SET_FOOD_DRINKS_TYPE:
     return { ...state, responseFoodAndDrinks: Object.values(action.payload).flat() };
   case SET_MEALS_CATEGORIES:

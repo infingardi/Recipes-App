@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useHistory } from 'react-router-dom';
+
+import { useLogin } from '../../hooks';
 import Card from '../../components/Card';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -15,15 +16,17 @@ import {
 import './index.css';
 
 function Foods() {
-  const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
-  const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
-  const verifyRef = useRef(verify);
-  const btnCategories = useSelector(({ mealsCategoryResponse }) => mealsCategoryResponse);
+  const dispatch = useDispatch();
   const history = useHistory();
   const MAX_LENGTH = 12;
   const MAX_LENGTH_CATEGORIES = 5;
 
-  const dispatch = useDispatch();
+  const { verifyLogin } = useLogin();
+
+  const data = useSelector(({ responseFoodAndDrinks }) => responseFoodAndDrinks);
+  const verify = useSelector(({ isClickedInExplore }) => isClickedInExplore);
+  const verifyRef = useRef(verify);
+  const btnCategories = useSelector(({ mealsCategoryResponse }) => mealsCategoryResponse);
 
   const getMeals = useCallback(async () => {
     const response = await getFood(SEARCH_ENDPOINT);
@@ -46,6 +49,7 @@ function Foods() {
   }, [dispatch]);
 
   useEffect(() => {
+    verifyLogin();
     getCategoryMeals();
   }, [getCategoryMeals]);
 

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { useLogin } from '../../hooks';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
@@ -13,10 +14,13 @@ import {
 
 function ExploreFoodsByNationality() {
   const MAX_LENGTH = 12;
+  const history = useHistory();
+
+  const { verifyLogin } = useLogin();
+
   const [selectedNationality, setSelectedNationality] = useState('All');
   const [allNationalities, setAllNationalities] = useState([]);
   const [allMealsByNationality, setAllMealsByNationality] = useState([]);
-  const history = useHistory();
 
   const getAllNatiolaities = async () => {
     const { meals } = await getFood(ENDPOINT_LIST_ALL_NATIONALITIES);
@@ -51,8 +55,6 @@ function ExploreFoodsByNationality() {
   };
 
   const handleClick = async (meal) => {
-    console.log(meal);
-
     history.push(`/foods/${meal.idMeal}`);
   };
 
@@ -71,6 +73,7 @@ function ExploreFoodsByNationality() {
   );
 
   useEffect(() => {
+    verifyLogin();
     getAllNatiolaities();
   }, []);
 

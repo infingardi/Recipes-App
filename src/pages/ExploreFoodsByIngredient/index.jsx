@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback, useState } from 'react';
-
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
+import { useLogin } from '../../hooks';
 import Footer from '../../components/Footer';
 import Card from '../../components/Card';
 import Header from '../../components/Header';
@@ -13,11 +14,12 @@ import {
 import { setFoodAndDrinks, verifyExploreClick } from '../../redux/actions';
 
 function ExploreFoodsByIngredient() {
+  const MAX_LENGTH = 12;
   const history = useHistory();
   const dispatch = useDispatch();
-  const [data, setData] = useState([]);
-  const MAX_LENGTH = 12;
 
+  const { verifyLogin } = useLogin();
+  const [data, setData] = useState([]);
   const getIngredientMeals = useCallback(async () => {
     const response = await getFood(ENDPOINT_LIST_ALL_INGREDIENTS);
     setData(response.meals);
@@ -32,6 +34,7 @@ function ExploreFoodsByIngredient() {
   };
 
   useEffect(() => {
+    verifyLogin();
     getIngredientMeals();
   }, [getIngredientMeals]);
 

@@ -11,21 +11,24 @@ import './index.css';
 export default function InputCheck({ text, index }) {
   const { id } = useParams();
   const { pathname } = useLocation();
-  const mealsOrDrinks = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
-  const { name } = handleData()[mealsOrDrinks];
-  const { addCheck, removeCheck, storage } = useUpdateInProgress(name);
-  const [isChecked, setIsChecked] = useState(storage[name][id].includes(text));
-  const { inProgressRecipes } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const mealsOrDrinks = pathname.split('/')[1] === 'foods' ? 'meals' : 'drinks';
 
-  function checkList({ target: { checked, parentElement } }) {
+  const { name } = handleData()[mealsOrDrinks];
+  const { inProgressRecipes } = useSelector((state) => state);
+  const { addCheck, removeCheck } = useUpdateInProgress(name);
+  const [isChecked, setIsChecked] = useState(
+    inProgressRecipes[name][id].includes(text.trim()),
+  );
+
+  async function checkList({ target: { checked, parentElement } }) {
     const newCheck = { [id]: [...inProgressRecipes[name][id], parentElement.innerText] };
     setIsChecked((old) => !old);
     if (checked) {
-      addCheck(parentElement.innerText);
+      await addCheck(parentElement.innerText);
       dispatch(setInProgressRecipes(name, newCheck, id));
     } else {
-      removeCheck(parentElement.innerText);
+      await removeCheck(parentElement.innerText);
       dispatch(RemoveProgress(name, { [id]: inProgressRecipes[name][id]
         .filter((f) => f !== parentElement.innerText) }));
     }
