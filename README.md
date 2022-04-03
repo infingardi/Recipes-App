@@ -17,6 +17,12 @@ O objetivo do projeto foi criar um app de receitas utilizando o que há de mais 
   <li>Supabase</li>
 </ul>
 
+<h2>Layout do Projeto</h2>
+
+![Login-screen](https://user-images.githubusercontent.com/46407523/161448993-ad56135d-afd6-42ad-962d-c8b7132098d7.png)
+![food-screen](https://user-images.githubusercontent.com/46407523/161449058-ac6be8ab-be01-48bd-90d1-f40007988704.png)
+
+
 <h2>Autores</h2>
 
 <h4>Igor Infingardi</h4>
